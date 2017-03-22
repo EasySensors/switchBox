@@ -13,6 +13,7 @@
  - 4 external switch connectors
  - Authentication security - Atmel ATSHA204A Crypto Authentication Chip
  - External JDEC EPROM
+ - Dualoptiboot bootloader. Implements over the air (OTA) firmware update ability
  - RFM69-CW (low power consumption version) 433 MHz Radio transceiver
  - Battery voltage sensor (via divider)
  - Externall battery connector JST 1.25 мм
