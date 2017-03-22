@@ -26,18 +26,14 @@
 
 Arduino Pins|	Description
 ------------|--------------
-A0, A1, A2 |	Available ARDUINO analog GPIO / DIGITAL GPIO
+A0, A1, A4, A5 |	Available ARDUINO analog GPIO / DIGITAL GPIO
 A6 |	Connected to Battery voltage sensor (via divider)
-A4 |	Connected to si1132 and bh1750 SDA 
-A5 |	Connected to si1132 and bh1750 SCL
 A3 |	Connected to  ATSHA204A
-D3, D4, D5, D6,D7, D9 |	Available ARDUINO digital GPIO
 D4, D5, D6, D7 | Connected to Switch Connectors JST type
 D8 |	Connected to CS FLASH chip (OTA) M25P40
 ANT |	RFM69 antenna
-
 Gnd | Ground
-Scissors line | you cat cut sensors and battery holder if you need just controller and radio
+
 
 
 **Arduino IDE Settings**
@@ -50,10 +46,10 @@ How to use it as home automation (IOT) node controller
 ------------------------------------------------------
 
 
-ButtonSizeNode.ino is the Arduino example sketch using [MySensors](https://www.mysensors.org/) API. 
+switchNode.ino is the Arduino example sketch using [MySensors](https://www.mysensors.org/) API. 
 
-Burn the ButtonSizeNode.ino sketch into it an it will became  one of the MySensors home automation network Node. 
-To create the network you need controller and at least two Nodes one as a Sensor, relay or actuator Node and the other one as “Gateway Serial”. I personally love [Domoticz](https://domoticz.com/) as conroller. Please check this [HowTo](https://github.com/EasySensors/ButtonSizeNode/blob/master/DomoticzInstallMySensors.md) to install Domoticz.
+Burn the switchNode.ino sketch into it an it will became  one of the MySensors home automation network Node. 
+To create the network you need controller and at least two Nodes one as a Sensor, relay or switch Node and the other one as “Gateway Serial”. I personally love [Domoticz](https://domoticz.com/) as conroller. Please check this [HowTo](https://github.com/EasySensors/ButtonSizeNode/blob/master/DomoticzInstallMySensors.md) to install Domoticz.
 
 However, for no-controller setup, as example, you can use 3 nodes - first node as “Gateway Serial”, second node as relay and lastone as switch for that relay. No controller needed then, keep the switch and the relay on the same address and the switch will operate the relay.
 
