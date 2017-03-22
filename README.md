@@ -30,6 +30,7 @@ Arduino Pins|	Description
 A0, A1, A4, A5 |	Available ARDUINO analog GPIO / DIGITAL GPIO
 A6 |	Connected to Battery voltage sensor (via divider)
 A3 |	Connected to  ATSHA204A
+D3 | Connected to Hardware debouncer. Triggers Interrupt<br> if any of the connectors changes state
 D4, D5, D6, D7 | Connected to Switch Connectors JST type
 D8 |	Connected to CS FLASH chip (OTA) M25P40
 ANT |	RFM69 antenna
