@@ -15,6 +15,7 @@
  - External JDEC EPROM
  - Dualoptiboot bootloader. Implements over the air (OTA) firmware update ability
  - RFM69-CW (low power consumption version) 433 MHz Radio transceiver
+ - Footprint available for replacing  RFM69-CW with NRF24L01+ 2.4 GHz radio
  - Battery voltage sensor (via divider)
  - Externall battery connector JST 1.25 мм
  - FTDI header for programming
