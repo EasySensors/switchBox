@@ -72,6 +72,6 @@ Connect the Node to FTDI USB adaptor, Select Pro Mini 8MHz board and burn the Bu
 
 >For schematics lovers:
 
-![enter image description here](https://github.com/EasySensors/ButtonSizeNode/blob/master/pics/schematic.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/vvvvvvvvvvvvvvvvvvv/blob/master/pics/schematic.jpg?raw=true)
 
 The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/Koresh)
