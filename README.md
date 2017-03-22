@@ -4,7 +4,8 @@
 
 # The Switch Node is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with RFM 69 CW 433 MHz radio on board and build in hardware debouncer. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. Check Specs below. It replaces this setup:
 
-![](https://github.com/EasySensors/ButtonSizeNode/blob/master/pics/replce.jpg?raw=true)
+![](https://github.com/EasySensors/SwitchNode/blob/master/pics/replace.jpg?raw=true)
+
 
 ## Specification: ##
  - Dimensions 32x50mm
