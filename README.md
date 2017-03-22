@@ -10,17 +10,14 @@
 ## Specification: ##
  - Dimensions 32x50mm
  - Hardware debouncer
- - Temperature and humidity sensor Si7021 
- - High Accuracy Temperature Sensor ±0.4 °C (max), –10 to 85 °C
- - Precision Relative Humidity Sensor ± 3% RH (max), 0–80% RH
- - Light sensor BH1750,  spectral responsibility is approximately human eye response.
+ - 4 external switch connectors
  - Authentication security - Atmel ATSHA204A Crypto Authentication Chip
  - External JDEC EPROM
- - RFM69-HW (high power version) or CW (low power consumption version) 433 MHz Radio transceiver
+ - RFM69-CW (low power consumption version) 433 MHz Radio transceiver
  - Battery voltage sensor (via divider)
- - Supply voltage up to 6.5 Volts
- - The Digital and Analog pins are 3.3 volts
- - Battery connector CR2032 240mAh
+ - Externall battery connector JST 1.25 мм
+ - FTDI header for programming
+ - Battery connector CR2450
 
 
 **Pin out:** 
@@ -34,10 +31,10 @@ A4 |	Connected to si1132 and bh1750 SDA
 A5 |	Connected to si1132 and bh1750 SCL
 A3 |	Connected to  ATSHA204A
 D3, D4, D5, D6,D7, D9 |	Available ARDUINO digital GPIO
+D4, D5, D6, D7 | Connected to Switch Connectors JST type
 D8 |	Connected to CS FLASH chip (OTA) M25P40
-MISO, MOSI, SCK, RST |	Connected to ISP header
 ANT |	RFM69 antenna
-Bat+ | Unregulated power up to 6.5 Volts
+
 Gnd | Ground
 Scissors line | you cat cut sensors and battery holder if you need just controller and radio
 
