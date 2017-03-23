@@ -76,3 +76,6 @@ Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Arduino IDE 
 ![enter image description here](https://github.com/EasySensors/vvvvvvvvvvvvvvvvvvv/blob/master/pics/schematic.jpg?raw=true)
 
 The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/Koresh)
+
+P.S.
+Always mind! if your Arduino code fails you need some backup plan, like some candles and matches in your bathroom... hope you understand.   Start your automation wisely. Like auotomate your doghouse first. Then checkenshed and so on!!!
