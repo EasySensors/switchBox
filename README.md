@@ -66,7 +66,7 @@ Arduino Pins|	Description
 #define MY_SIGNING_ATSHA204 | Define if you like to use Crypto Authentication to secure your nodes<br> from intruders or interference. After that, you have to “personalize”<br> all the nodes, which have those, defines enabled.<br> [**How to “personalize” nodes with encryption key**](https://github.com/EasySensors/ButtonSizeNode/blob/master/SecurityPersonalizationHowTo.md)
 sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0); | Sends the Switch Controller into the sleep mode untill<br> somebody press or release any of the 4 buttons. 
 
-Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Aarduino IDE and upload the switchNode.ino sketch.
+Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Arduino IDE and upload the switchNode.ino sketch.
 
 **Done**
 
