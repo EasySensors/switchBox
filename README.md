@@ -20,6 +20,7 @@
  - Externall battery connector JST 1.25 мм
  - FTDI header for programming
  - Battery connector CR2450
+ - Reverse polarity protection
 
 
 **Pin out:** 
