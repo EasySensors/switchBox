@@ -27,7 +27,7 @@
 
 Arduino Pins|	Description
 ------------|--------------
-A0, A1, A4, A5, A7 |	Available ARDUINO analog GPIO / DIGITAL GPIO  ![]/https://github.com/EasySensors/SwitchNode/blob/master/pics/a1-5.jpg?raw=true)
+A0, A1, A4, A5, A7 |	Available ARDUINO analog GPIO / DIGITAL GPIO  ![](https://github.com/EasySensors/SwitchNode/blob/master/pics/a1-5.jpg?raw=true)
 A6 |	Connected to Battery voltage sensor (via divider)
 A3 |	Connected to  ATSHA204A
 D3 | Connected to Hardware debouncer. Triggers Interrupt<br> if any of the Switch Connectors change state
