@@ -79,9 +79,9 @@ Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Arduino IDE 
 
 The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/Koresh)
 
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/S1.jpg?raw=true)
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/S2.jpg?raw=true)
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/S3.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw1.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw2.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw3.jpg?raw=true)
 
 
 P.S. Always mind! if your Arduino code fails you need some backup plan. Put some candles and matches in your bathroom )))))... hope you understand. Start your automation wisely. Like auotomate your doghouse first. Then checkenshed and so on!!!
