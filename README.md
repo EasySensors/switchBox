@@ -11,8 +11,8 @@
 
 ## Specification: ##
  - Dimensions 32x50mm
- - Hardware switches controller with hardware debouncer. you do not need to do <br>
-   any debouncer code in the sketch plus it saves some battery as no processor <br> time involved in debouncing 
+ - Hardware switches controller with hardware debouncer. No need to do <br>
+   any debouncer code in the sketch plus it saves some battery as no processor <br> time involved in the debouncing process
  - 4 external switch connectors
  - Authentication security - Atmel ATSHA204A Crypto Authentication Chip
  - External JDEC EPROM
