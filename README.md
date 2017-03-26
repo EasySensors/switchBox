@@ -1,6 +1,6 @@
 
 
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode1.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode11.jpg?raw=true)
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode2.jpg?raw=true)
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode3.jpg?raw=true)
 
