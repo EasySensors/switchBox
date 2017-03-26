@@ -80,9 +80,7 @@ The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw2.jpg?raw=true)
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw3.jpg?raw=true)
 
->For schematics lovers:
-
-![enter image description here](https://github.com/EasySensors/vvvvvvvvvvvvvvvvvvv/blob/master/pics/schematic.jpg?raw=true)
+>[The board schematics Pdf](https://github.com/EasySensors/SwitchNode/blob/master/pdf/switchInsertableNode_sch.PDF)
 
 
 P.S. Always mind! if your Arduino code fails you need some backup plan. Put some candles and matches in your bathroom )))))... hope you understand. Start your automation wisely. Like auotomate your doghouse first. Then checkenshed and so on!!!
