@@ -1,7 +1,7 @@
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
-#define MY_NODE_ID 100
+#define MY_NODE_ID 0xF1
 //0xF3
 //0xC9
 
@@ -12,9 +12,11 @@
 
 //#define MY_TRANSPORT_WAIT_READY_MS   (2000ul)
 
+//Enable OTA feature
 #define MY_SIGNING_ATSHA204
 #define  MY_SIGNING_REQUEST_SIGNATURES
 
+//Enable Crypto Authentication to secure the node
 #define MY_OTA_FIRMWARE_FEATURE
 #define MY_OTA_FLASH_JDECID 0x2020
 
@@ -27,15 +29,18 @@
 #define SPIFLASH_CHIPERASE        0x60
 
 
-#define SKETCH_NAME "4 switches node "
-#define SKETCH_MAJOR_VER "1"
+#define SKETCH_NAME "Switch Node "
+#define SKETCH_MAJOR_VER "2"
 #define SKETCH_MINOR_VER "0"
 
 // Initialising array holding button child ID's
-// NULL values used to indicate no switch attached to a connecctor and no child ID need to be added in Controller
+// NULL values used to indicate no switch attached to the corresponding switch connecctor and no child ID need to be added in a Controller
 int SWITCH_CHILD_ID[4] = {1, NULL, NULL, NULL};
 
-#define TACT_SWITCHES
+
+// Type of switch connected to the white JST connector on the board. A2 arduino Pin
+// Momentary is notebook style key.
+#define MOMENTARY_SWITCH
 
 #define BUTTONS_INTERUPT_PIN 3
 
@@ -124,7 +129,7 @@ void loop()
   }
   //   Check active switches
 
-#ifdef TACT_SWITCHES
+#ifdef MOMENTARY_SWITCH
   for (int i = 0; i <= 3; i++) {
     if (SWITCH_CHILD_ID[i] != NULL) {
       value[i] = digitalRead(SWITCH_BUTTON_PIN[i]);
@@ -160,15 +165,6 @@ void loop()
   }
   wait(100);
 #endif
-  /*
-    if (!isTransportOK()) {
-    // TNR: transport not ready
-    //transportSwitchSM(stInit);
-    //stInitTransition();
-    Serial.println("*******TNR: interception*********");
-    _begin();
-    }
-  */
   //if (_radio.readRSSI() < CSMA_LIMIT){Serial.print(" canSend():"); Serial.println(_radio.readRSSI());}
   sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
 }
