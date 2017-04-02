@@ -1,15 +1,14 @@
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
+#define MY_NODE_ID 100
+//0xF3
+//0xC9
+
 // Enable and select radio type attached
 #define MY_RADIO_RFM69
-
 #define MY_RFM69_FREQUENCY   RF69_433MHZ
-//#define MY_RFM69_FREQUENCY   RF69_868MHZ
-//#define MY_RFM69_FREQUENCY   RF69_315MHZ
-//#define MY_RFM69_FREQUENCY   RF69_915MHZ
-
-//#define MY_IS_RFM69HW
+#define MY_IS_RFM69HW
 
 //#define MY_TRANSPORT_WAIT_READY_MS   (2000ul)
 
@@ -19,10 +18,6 @@
 #define MY_OTA_FIRMWARE_FEATURE
 #define MY_OTA_FLASH_JDECID 0x2020
 
-
-#define MY_NODE_ID 100
-//0xF3
-//0xC9
 //#define MY_BAUD_RATE 19200
 #include <SPI.h>
 #include <MySensors.h>
@@ -52,7 +47,6 @@ int oldBatteryPcnt = 0;
 
 // Initialising array holding button state messages
 MyMessage msg_switch[4];
-
 
 void before()
 {
@@ -134,10 +128,6 @@ void loop()
   for (int i = 0; i <= 3; i++) {
     if (SWITCH_CHILD_ID[i] != NULL) {
       value[i] = digitalRead(SWITCH_BUTTON_PIN[i]);
-
-      //Serial.println("CHILD_ID");
-      //Serial.println(loadState(SWITCH_CHILD_ID[i]));
-
       if (value[i] == 1) { //last_value[i] != value[i] &&
         uint8_t loadedState = loadState(SWITCH_CHILD_ID[i]);
         if (last_value[i] == NULL) {
@@ -170,8 +160,6 @@ void loop()
   }
   wait(100);
 #endif
-
-
   /*
     if (!isTransportOK()) {
     // TNR: transport not ready
@@ -181,14 +169,6 @@ void loop()
     _begin();
     }
   */
-  //rfm reset
-  //digitalWrite(9,1);
-  //delay(100);
-  //digitalWrite(9,0);
-  //wait(10000);
-  // OTA wake state - keep pressing button #4
-  //if (value[4] == 0) {sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);}
-  
   //if (_radio.readRSSI() < CSMA_LIMIT){Serial.print(" canSend():"); Serial.println(_radio.readRSSI());}
   sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
 }
