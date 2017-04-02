@@ -17,4 +17,10 @@ Comes with Arduino example sketch and guide to IOT ideas.
 
 For complete specs check [my GitHub page](https://github.com/EasySensors/SwitchNode)
  
+I combine shipping on all of my items. If you purchase more than one of my listings, please wait until I send you an invoice with the correct shipping before paying.
+
+Package Content:
+•	The Controller board 1 pcs  
+•	JST Connectros 5 pcs  
+
   
