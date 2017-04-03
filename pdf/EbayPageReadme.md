@@ -9,7 +9,8 @@
 - Onboard Atmel ATSHA204A CryptoAuthentication chip makes communication with the Node very secured. ATSHA204A implements secured handshake and if handshake fails the Node will not executing any command sent to it
 - Programming header is FTDI, TTL Serial. For programming you need to have  USB TTL Serial – FTDI adaptor
 - ENIG Emersion Gold finish
-- MySensors compatible. You can use superb set of scripts and libraries from [mysensors.org](http://www.mysensors.org) project  and convert the node into reliable network of little home sensors, relays and actuators.
+- MySensors compatible. You can use superb set of scripts and libraries from [mysensors.org](http://www.mysensors.org) project  and convert the nodes into reliable network of little home sensors, relays and actuators.
+- Supports both ON/OFF and momentary switches 
 - Battery connector CR2450
 - Yes, it is open sourced. Completely.
 
