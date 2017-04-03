@@ -4,8 +4,8 @@
 
 ## Features
 - Fully compatible with the Arduino IDE (PRO MINI 8 MG Hz)
-- Over the Air, firmware updates (OTA) ready. In combination with preprogrammed Dual Optiboot boot loader and External JDEC  EPROM\Flash memory chip on board the Node allows OTA software updates.
-- Onboard RFM69 CW 433 MHz Radio Transceiver  with wire antenna
+- Over the Air, firmware updates (OTA) ready. In combination with preprogrammed Dual Optiboot boot loader and  on board External JDEC  EPROM\Flash memory the Node allows OTA software updates.
+- Onboard RFM69-CW 433 MHz Radio Transceiver  with wire antenna
 - Onboard Atmel ATSHA204A CryptoAuthentication chip makes communication with the Node very secured. ATSHA204A implements secured handshake and if handshake fails the Node will not executing any command sent to it
 - Programming header is FTDI, TTL Serial. For programming you need to have  USB TTL Serial – FTDI adaptor
 - ENIG Emersion Gold finish
