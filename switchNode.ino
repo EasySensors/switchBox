@@ -1,14 +1,13 @@
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
-#define MY_NODE_ID 0xF1
+#define MY_NODE_ID 100
 //0xF3
 //0xC9
 
 // Enable and select radio type attached
 #define MY_RADIO_RFM69
 #define MY_RFM69_FREQUENCY   RF69_433MHZ
-#define MY_IS_RFM69HW
 
 //#define MY_TRANSPORT_WAIT_READY_MS   (2000ul)
 
