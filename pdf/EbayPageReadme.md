@@ -17,15 +17,11 @@ Comes with Arduino example sketch and some IOT ideas based on the switch node an
 
 For complete specs check [my GitHub page](https://github.com/EasySensors/SwitchNode)
 
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode11.jpg?raw=true)
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode2.jpg?raw=true)
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode3.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw1.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw2.jpg?raw=true)
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw3.jpg?raw=true)
 
- 
 Package Content:
 -	The Controller board 1 pcs  
 -	JST Connectros 5 pcs  
 - No Battery
-
-
-  
