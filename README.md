@@ -4,7 +4,7 @@
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode2.jpg?raw=true)
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/SwitchNode3.jpg?raw=true)
 
-### The Switch Node is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with RFM 69 CW 433 MHz radio on board and build in hardware debouncer. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. Check Specs below. It replaces this setup:
+### The Switch Node is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF RFM69-CW 433 MHz radio on board and build in hardware debouncer. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. Check Specs below. It replaces this setup:
 
 ![](https://github.com/EasySensors/SwitchNode/blob/master/pics/replace.jpg?raw=true)
 
