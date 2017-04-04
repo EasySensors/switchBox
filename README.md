@@ -58,7 +58,7 @@ switchNode.ino is the Arduino example sketch using [MySensors](https://www.mysen
 Burn the switchNode.ino sketch into it an it will became  one of the MySensors home automation network Node. 
 To create the network you need controller and at least two Nodes one as a Sensor, relay or switch Node and the other one as “Gateway Serial”. I personally love [Domoticz](https://domoticz.com/) as conroller. Please check this [HowTo](https://github.com/EasySensors/ButtonSizeNode/blob/master/DomoticzInstallMySensors.md) to install Domoticz.
 
-However, for no-controller setup, as example, you can use 3 nodes - first node as “Gateway Serial”, second node as relay and lastone as switch for that relay. No controller needed then, keep the switch and the relay on the same address and the switch will operate the relay.
+However, for no-controller setup, as example, you can use 3 nodes - first node as “Gateway Serial”, second node as relay and last one as switch for that relay. No controller needed then, keep the switch and the relay on the same address and the switch will operate the relay.
 
 Things worth mentioning about the  [MySensors](https://www.mysensors.org/) Arduino sketch: 
 
