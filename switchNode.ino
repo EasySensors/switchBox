@@ -13,11 +13,11 @@
 
 //#define MY_TRANSPORT_WAIT_READY_MS   (2000ul)
 
-//Enable OTA feature
-//#define MY_SIGNING_ATSHA204
+//Enable Crypto Authentication to secure the node
+#define MY_SIGNING_ATSHA204
 //#define  MY_SIGNING_REQUEST_SIGNATURES
 
-//Enable Crypto Authentication to secure the node
+//Enable OTA feature
 #define MY_OTA_FIRMWARE_FEATURE
 #define MY_OTA_FLASH_JDECID 0x2020
 
