@@ -1,7 +1,7 @@
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
-#define MY_NODE_ID 100
+#define MY_NODE_ID 0xC9
 //0xF3
 //0xC9
 
@@ -9,11 +9,13 @@
 #define MY_RADIO_RFM69
 #define MY_RFM69_FREQUENCY   RF69_433MHZ
 
+//#define MY_RADIO_NRF24
+
 //#define MY_TRANSPORT_WAIT_READY_MS   (2000ul)
 
 //Enable OTA feature
-#define MY_SIGNING_ATSHA204
-#define  MY_SIGNING_REQUEST_SIGNATURES
+//#define MY_SIGNING_ATSHA204
+//#define  MY_SIGNING_REQUEST_SIGNATURES
 
 //Enable Crypto Authentication to secure the node
 #define MY_OTA_FIRMWARE_FEATURE
