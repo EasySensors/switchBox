@@ -18,11 +18,15 @@
  *
 **/
 
-
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
 #define MY_NODE_ID 0xAA
+
+// Avoid battery drain if Gateway disconnected and the node sends more than MY_TRANSPORT_STATE_RETRIES times message.
+#define MY_TRANSPORT_UPLINK_CHECK_DISABLED
+#define MY_PARENT_NODE_IS_STATIC
+#define MY_PARENT_NODE_ID 0
 
 // Type of switches connected to the white JST connectors on the board.
 // Momentary is notebook style key.
