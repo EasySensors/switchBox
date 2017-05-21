@@ -1,6 +1,6 @@
 
 
-### The Switch Node is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with footprint ready for HopeRF RFM69-CW or SMD NRF24L01+ 2.4 GHz radio. Comes with build in hardware debouncer. Best suitable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project.
+### The no radio soldered Switch Node is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with footprint ready for HopeRF RFM69-CW or SMD NRF24L01+ 2.4 GHz radio. Comes with build in hardware debouncer. Best suitable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project.
 
 ## Features
 - Fully compatible with the Arduino IDE (PRO MINI 8 MG Hz)
