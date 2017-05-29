@@ -1,6 +1,18 @@
 
+### The No Radio Switch Node KIT is DIY set of SMD0603 componets to make No Radio soldered Switch Node. The microcontroller footprint is ready for HopeRF RFM69-CW or SMD NRF24L01+ 2.4 GHz radio. Comes with build in hardware debouncer. Best suitable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project.
 
-### The no radio soldered Switch Node is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with footprint ready for HopeRF RFM69-CW or SMD NRF24L01+ 2.4 GHz radio. Comes with build in hardware debouncer. Best suitable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project.
+## The KIT content:
+- Preprogrammed ATMega328P chip with Dual optibot bootloader
+- SMD componentsts 
+- PCB
+- Battery Holder
+- JST connectors 5 pcs
+- No battery
+
+![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/KITnor.jpg?raw=true)
+
+
+###The soldered kit will be the Switch Node without radio soldered. It is ready for HopeRF RFM69 or NRF24L01+ 2.4 GHz radio installed on board. Check description below:
 
 ## Features
 - Fully compatible with the Arduino IDE (PRO MINI 8 MG Hz)
@@ -21,9 +33,3 @@ If you are familiar with Arduino boards, the Switch Node is Arduino pro Mini rea
 
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/swNoRadio.jpg?raw=true)
 ![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw2.jpg?raw=true)
-
-
-Package Content:
-- The Switch Node Controller board 1 pcs  
-- JST connectors 5 pcs  
-- No Battery

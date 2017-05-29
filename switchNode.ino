@@ -60,7 +60,6 @@
 // NULL values used to indicate no switch attached to the corresponding switch connector and no child ID need to be added in a Controller
 int SWITCH_CHILD_ID[4] = {1, 2, 3, NULL};
 
-
 #define BUTTONS_INTERUPT_PIN 3
 
 // Initialising array holding Arduino Digital I/O pins for button/reed switches
@@ -74,6 +73,7 @@ MyMessage msg_switch[4];
 
 void before()
 {
+  analogReference(INTERNAL);
   // RFM reset pin
   pinMode(9, OUTPUT);
   digitalWrite(9, 0);
@@ -87,7 +87,6 @@ void before()
 void presentation() {
   // Send the sketch version information to the gateway and Controller
   sendSketchInfo(SKETCH_NAME, SKETCH_MAJOR_VER "." SKETCH_MINOR_VER);
-  analogReference(INTERNAL);
 
   // Register binary input sensor to sensor_node (they will be created as child devices)
   // You can use S_DOOR, S_MOTION or S_LIGHT here depending on your usage.
@@ -110,16 +109,27 @@ void loop()
   // Buttons state values array
   static uint8_t  value[4] = {NULL, NULL, NULL, NULL};
   static  uint8_t last_value[4] = {NULL, NULL, NULL, NULL};
-
-  // Get the battery Voltage
+ 
+ // Get the battery Voltage
   int sensorValue = analogRead(BATTERY_SENSE_PIN);
-  // 1M, 470K divider across battery and using internal ADC ref of 1.1V
-  // Sense point is bypassed with 0.1 uF cap to reduce noise at that point
+  // 1M, 470K divider across battery and using internal ADC ref of 1.1V1
   // ((1e6+470e3)/470e3)*1.1 = Vmax = 3.44 Volts
-  // 3.44/1023 = Volts per bit = 0.003363075
+  /* The MySensors Lib uses internal ADC ref of 1.1V which means analogRead of the pin connected to 470kOhms Battery Devider reaches  
+   * 1023 when voltage on the divider is around 3.44 Volts. 2.5 volts is equal to 750. 2 volts is equal to 600. 
+   * RFM 69 CW works stable up to 2 volts. Assume 2.5 V is 0% and 1023 is 100% battery charge    
+   * 3.3V ~ 1023
+   * 3.0V ~ 900
+   * 2.5V ~ 750 
+   * 2.0V ~ 600
+   */
 
-  int batteryPcnt = sensorValue / 10;
-  if (oldBatteryPcnt != batteryPcnt) {
+  Serial.print("sensorValue: "); Serial.println(sensorValue); 
+  int batteryPcnt = (sensorValue - 600)  / 3;
+  
+  batteryPcnt = batteryPcnt > 0 ? batteryPcnt:0; // Cut down negative values. Just in case the battery goes below 2V (2.5V) and the node still working. 
+  batteryPcnt = batteryPcnt < 100 ? batteryPcnt:100; // Cut down more than "100%" values. In case of ADC fluctuations. 
+
+  if (oldBatteryPcnt != batteryPcnt ) {
     // Power up radio after sleep
     sendBatteryLevel(batteryPcnt);
     oldBatteryPcnt = batteryPcnt;
