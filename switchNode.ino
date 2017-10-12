@@ -34,7 +34,11 @@
 
 // Enable and select radio type attached
 #define MY_RADIO_RFM69
-#define MY_RFM69_FREQUENCY   RF69_433MHZ
+#define MY_RFM69_FREQUENCY   RFM69_433MHZ
+//#define MY_RFM69_FREQUENCY    RFM69_868MHZ
+//#define MY_RFM69_FREQUENCY    RFM69_915MHZ
+
+#define MY_RFM69_NEW_DRIVER
 
 //#define MY_RADIO_NRF24
 
@@ -43,8 +47,8 @@
 //#define  MY_SIGNING_REQUEST_SIGNATURES
 
 // Enable OTA feature
-#define MY_OTA_FIRMWARE_FEATURE
-#define MY_OTA_FLASH_JDECID 0x2020
+//#define MY_OTA_FIRMWARE_FEATURE
+//#define MY_OTA_FLASH_JDECID 0x0 //0x2020 
 
 #include <SPI.h>
 #include <MySensors.h>
@@ -58,7 +62,7 @@
 
 // Initialising array holding button child ID's
 // NULL values used to indicate no switch attached to the corresponding switch connector and no child ID need to be added in a Controller
-int SWITCH_CHILD_ID[4] = {1, 2, 3, NULL};
+int SWITCH_CHILD_ID[4] = {5, NULL, NULL, NULL};
 
 #define BUTTONS_INTERUPT_PIN 3
 
@@ -107,7 +111,7 @@ void setup() {
 void loop()
 {
   // Buttons state values array
-  static uint8_t  value[4] = {NULL, NULL, NULL, NULL};
+  static uint8_t  readValue =  0;
   static  uint8_t last_value[4] = {NULL, NULL, NULL, NULL};
  
  // Get the battery Voltage
@@ -136,41 +140,34 @@ void loop()
   }
 
 // Check active switches
+uint8_t retry = 5;
 #ifdef MOMENTARY_SWITCH
   for (int i = 0; i <= 3; i++) {
-    if (SWITCH_CHILD_ID[i] != NULL) {
-      value[i] = digitalRead(SWITCH_BUTTON_PIN[i]);
-      if (value[i] == 1) { //last_value[i] != value[i] &&
-        uint8_t loadedState = loadState(SWITCH_CHILD_ID[i]);
-        if (last_value[i] == NULL) {
-          last_value[i] = 0;
+    if (SWITCH_CHILD_ID[i] != NULL && digitalRead(SWITCH_BUTTON_PIN[i]) == 1) {
+        //uint8_t loadedState = loadState(SWITCH_CHILD_ID[i]);
+        readValue == 0 ? readValue = 1:readValue = 0;  
+        while (!send(msg_switch[i].set(readValue), true)  && retry > 0) { 
+          // send did not go through, try  "uint8_t retry = 5" more times
+          sleep(100); retry--;
         }
-        if ( loadedState == 255) {
-          //no controller found
-          send(msg_switch[i].set(!last_value[i] ? true : false), true);
-          last_value[i] = !last_value[i];
-        }
-        else  {
-          send(msg_switch[i].set(!loadedState ? true : false), true);
-          last_value[i] = loadedState;
-        }
-      }
     }
   }
-  wait(100);
 #else
   for (int i = 0; i <= 3; i++) {
     if (SWITCH_CHILD_ID[i] != NULL) {
-      value[i] = digitalRead(SWITCH_BUTTON_PIN[i]);
-      if (last_value[i] != value[i]) {
-        last_value[i] = value[i];
+      readValue = digitalRead(SWITCH_BUTTON_PIN[i]);
+      // find which connector(pin) triggered interrupt 
+      if (last_value[i] != readValue) {
+        last_value[i] = readValue;
         Serial.println("VALUE");
-        Serial.println(value[i]);
-        send(msg_switch[i].set(value[i] ? false : true), true);
+        Serial.println(readValue);
+        while (!send(msg_switch[i].set(readValue), true)  && retry > 0) { 
+          // send did not go through, try  "uint8_t retry = 5" more times
+          sleep(100); retry--;
+        }
       }
     }
   }
-  wait(100);
 #endif
   sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
 }
