@@ -55,7 +55,7 @@ Gnd | Ground
 ![FTDI Power](https://github.com/EasySensors/SwitchNode/blob/master/pics/FTDIvcc3.jpg?raw=true)
 
 
-3.3V power option should to be used.
+3.3V power option should be used.
 
 
 
