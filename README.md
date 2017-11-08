@@ -49,6 +49,16 @@ Gnd | Ground
 
 
 
+
+**programming FTDI adapter connection**
+
+![FTDI Power](https://github.com/EasySensors/SwitchNode/blob/master/pics/FTDIvcc3.jpg?raw=true)
+
+
+3.3V power option should to be used.
+
+
+
 How to use it as home automation (IOT) node controller
 ------------------------------------------------------
 
