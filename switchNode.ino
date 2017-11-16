@@ -21,7 +21,23 @@
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
-#define MY_NODE_ID 0xAA
+// The switch Node ID
+#define MY_NODE_ID 0x4E
+
+
+/* Each JST connector status (On or Off) can be sent to a different Relay or Actuator NodeId address.  
+ *  relayNodeID stores Relay or Actuator NodeId addresses. Each adress can have different Child\Sensor ID.  
+ *  relayChildID is Child\Sensor ID's array. 
+ * int relayNodeID[4] = {0xF2, 0xA0, 0x0, 0x0}; 
+ * int relayChildID[4] = {1, 2, NULL, NULL};
+ * above declaration means: JST connector 1 will send it state to assigned Relay Address 0xF2 with Child\Sensor ID 1. 
+ * JST connector 2 will send it state to assigned Relay Address 0xA0 with Child\Sensor ID 2. 
+ * JST connectors 3 - 4 have no attached sensorsors and will not be "presented" since there NULL values.
+ * NULL value indicates no switch attached to the corresponding JST connector
+*/
+
+int relayNodeID[4] = {0xEE, 0x0, 0x0, 0x0};
+int relayChildID[4] = {1, NULL, NULL, NULL};
 
 // Avoid battery drain if Gateway disconnected and the node sends more than MY_TRANSPORT_STATE_RETRIES times message.
 #define MY_TRANSPORT_UPLINK_CHECK_DISABLED
@@ -33,14 +49,15 @@
 #define MOMENTARY_SWITCH
 
 // Enable and select radio type attached
-#define MY_RADIO_RFM69
-#define MY_RFM69_FREQUENCY   RFM69_433MHZ
-//#define MY_RFM69_FREQUENCY    RFM69_868MHZ
-//#define MY_RFM69_FREQUENCY    RFM69_915MHZ
-
-#define MY_RFM69_NEW_DRIVER
 
 //#define MY_RADIO_NRF24
+
+#define MY_RADIO_RFM69
+#define MY_RFM69_FREQUENCY   RF69_433MHZ
+//#define MY_RFM69_FREQUENCY    RF69_868MHZ
+//#define MY_RFM69_FREQUENCY    RF69_915MHZ
+
+//#define MY_RFM69_NEW_DRIVER
 
 // Enable Crypto Authentication to secure the node
 //#define MY_SIGNING_ATSHA204
@@ -57,34 +74,43 @@
 #define SPIFLASH_CHIPERASE        0x60
 
 #define SKETCH_NAME "Switch Node "
-#define SKETCH_MAJOR_VER "2"
+#define SKETCH_MAJOR_VER "3"
 #define SKETCH_MINOR_VER "0"
-
-// Initialising array holding button child ID's
-// NULL values used to indicate no switch attached to the corresponding switch connector and no child ID need to be added in a Controller
-int SWITCH_CHILD_ID[4] = {5, NULL, NULL, NULL};
 
 #define BUTTONS_INTERUPT_PIN 3
 
 // Initialising array holding Arduino Digital I/O pins for button/reed switches
-int SWITCH_BUTTON_PIN[4] = {4, 5, 6, 7};
+int switchButtonPin[4] = {4, 5, 6, 7};
 
 int BATTERY_SENSE_PIN = A6;  // select the input pin for the battery sense point
 int oldBatteryPcnt = 0;
 
 // Initialising array holding button state messages
-MyMessage msg_switch[4];
+MyMessage msgSwitch[4];
 
 void before()
 {
   analogReference(INTERNAL);
-  // RFM reset pin
-  pinMode(9, OUTPUT);
-  digitalWrite(9, 0);
+
+  #ifdef  MY_RADIO_RFM69
+    /*  RFM reset pin is 9
+     *  A manual reset of the RFM69HCW\CW is possible even for applications in which VDD cannot be physically disconnected.
+     *  Pin RESET should be pulled high for a hundred microseconds, and then released. The user should then wait for 5 ms
+     *  before using the module.
+     */
+    pinMode(9, OUTPUT);
+    //reset RFM module
+    digitalWrite(9, 1);
+    delay(1);
+    // set Pin 9 to high impedance
+    pinMode(9, INPUT);
+    delay(10);
+  #endif
+
   // Setup the buttons
   // There is no need to activate internal pull-ups
   for (int i = 0; i <= 3; i++) {
-    pinMode(SWITCH_BUTTON_PIN[i], INPUT);
+    pinMode(switchButtonPin[i], INPUT);
   }
 }
 
@@ -95,12 +121,14 @@ void presentation() {
   // Register binary input sensor to sensor_node (they will be created as child devices)
   // You can use S_DOOR, S_MOTION or S_LIGHT here depending on your usage.
   // If S_LIGHT is used, remember to update variable type you send in. See "msg" above.
+
   for (int i = 0; i <= 3; i++) {
-    if (SWITCH_CHILD_ID[i] != NULL) {
-      msg_switch[i] = MyMessage(SWITCH_CHILD_ID[i], V_LIGHT);
-      present(SWITCH_CHILD_ID[i], S_LIGHT);
+    if (relayChildID[i] != NULL) {
+      msgSwitch[i] = MyMessage(relayChildID[i], V_LIGHT);
+      present(relayChildID[i], S_LIGHT);
     }
   }
+
 }
 
 void setup() {
@@ -109,16 +137,52 @@ void setup() {
 
 // Loop will iterate on changes on the BUTTON_PINs
 void loop()
-{
+{ 
+
   // Buttons state values array
   static uint8_t  readValue =  0;
   static  uint8_t last_value[4] = {NULL, NULL, NULL, NULL};
  
+// Check active switches
+uint8_t retry = 5;
+#ifdef MOMENTARY_SWITCH
+  for (int i = 0; i <= 3; i++) {
+    if (relayChildID[i] != NULL && digitalRead(switchButtonPin[i]) == 1) {
+        //uint8_t loadedState = loadState(relayChildID[i]);
+        readValue == 0 ? readValue = 1:readValue = 0;  
+        msgSwitch[i].setDestination(relayNodeID[i]);
+        while (!send(msgSwitch[i].set(readValue), true)  && retry > 0) { 
+          // send did not go through, try  "uint8_t retry = 5" more times
+          sleep(100); retry--;
+        }
+    }
+  }
+  //sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
+#else
+  for (int i = 0; i <= 3; i++) {
+    if (relayChildID[i] != NULL) {
+      readValue = digitalRead(switchButtonPin[i]);
+      // find which connector(pin) triggered interrupt 
+      if (last_value[i] != readValue) {
+        last_value[i] = readValue;
+        Serial.println("VALUE");
+        Serial.println(readValue);
+        msgSwitch[i].setDestination(relayNodeID[i]);
+        while (!send(msgSwitch[i].set(readValue), true)  && retry > 0) { 
+          // send did not go through, try  "uint8_t retry = 5" more times
+          sleep(100); retry--;
+        }
+      }
+    }
+  }
+  //sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
+#endif
+
  // Get the battery Voltage
   int sensorValue = analogRead(BATTERY_SENSE_PIN);
-  // 1M, 470K divider across battery and using internal ADC ref of 1.1V1
-  // ((1e6+470e3)/470e3)*1.1 = Vmax = 3.44 Volts
-  /* The MySensors Lib uses internal ADC ref of 1.1V which means analogRead of the pin connected to 470kOhms Battery Devider reaches  
+  /* 1M, 470K divider across battery and using internal ADC ref of 1.1V1
+   * ((1e6+470e3)/470e3)*1.1 = Vmax = 3.44 Volts
+   * The MySensors Lib uses internal ADC ref of 1.1V which means analogRead of the pin connected to 470kOhms Battery Devider reaches  
    * 1023 when voltage on the divider is around 3.44 Volts. 2.5 volts is equal to 750. 2 volts is equal to 600. 
    * RFM 69 CW works stable up to 2 volts. Assume 2.5 V is 0% and 1023 is 100% battery charge    
    * 3.3V ~ 1023
@@ -127,47 +191,16 @@ void loop()
    * 2.0V ~ 600
    */
 
-  Serial.print("sensorValue: "); Serial.println(sensorValue); 
+  //  Serial.print("sensorValue: "); Serial.println(sensorValue); 
   int batteryPcnt = (sensorValue - 600)  / 3;
   
   batteryPcnt = batteryPcnt > 0 ? batteryPcnt:0; // Cut down negative values. Just in case the battery goes below 2V (2.5V) and the node still working. 
   batteryPcnt = batteryPcnt < 100 ? batteryPcnt:100; // Cut down more than "100%" values. In case of ADC fluctuations. 
 
   if (oldBatteryPcnt != batteryPcnt ) {
-    // Power up radio after sleep
-    sendBatteryLevel(batteryPcnt);
+    //Power up radio after sleep
+    // sendBatteryLevel(batteryPcnt);
     oldBatteryPcnt = batteryPcnt;
   }
-
-// Check active switches
-uint8_t retry = 5;
-#ifdef MOMENTARY_SWITCH
-  for (int i = 0; i <= 3; i++) {
-    if (SWITCH_CHILD_ID[i] != NULL && digitalRead(SWITCH_BUTTON_PIN[i]) == 1) {
-        //uint8_t loadedState = loadState(SWITCH_CHILD_ID[i]);
-        readValue == 0 ? readValue = 1:readValue = 0;  
-        while (!send(msg_switch[i].set(readValue), true)  && retry > 0) { 
-          // send did not go through, try  "uint8_t retry = 5" more times
-          sleep(100); retry--;
-        }
-    }
-  }
-#else
-  for (int i = 0; i <= 3; i++) {
-    if (SWITCH_CHILD_ID[i] != NULL) {
-      readValue = digitalRead(SWITCH_BUTTON_PIN[i]);
-      // find which connector(pin) triggered interrupt 
-      if (last_value[i] != readValue) {
-        last_value[i] = readValue;
-        Serial.println("VALUE");
-        Serial.println(readValue);
-        while (!send(msg_switch[i].set(readValue), true)  && retry > 0) { 
-          // send did not go through, try  "uint8_t retry = 5" more times
-          sleep(100); retry--;
-        }
-      }
-    }
-  }
-#endif
   sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
 }
