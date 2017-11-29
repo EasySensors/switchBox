@@ -64,8 +64,8 @@ int relayChildID[4] = {1, NULL, NULL, NULL};
 //#define  MY_SIGNING_REQUEST_SIGNATURES
 
 // Enable OTA feature
-//#define MY_OTA_FIRMWARE_FEATURE
-//#define MY_OTA_FLASH_JDECID 0x0 //0x2020 
+#define MY_OTA_FIRMWARE_FEATURE
+#define MY_OTA_FLASH_JDECID 0x0 //0x2020 
 
 #include <SPI.h>
 #include <MySensors.h>
@@ -136,15 +136,15 @@ void setup() {
 }
 
 // Loop will iterate on changes on the BUTTON_PINs
-void loop()
-{ 
-
+void loop(){ 
   // Buttons state values array
   static uint8_t  readValue =  0;
   static  uint8_t last_value[4] = {NULL, NULL, NULL, NULL};
- 
-// Check active switches
-uint8_t retry = 5;
+  
+  _flash.wakeup();
+  
+  // Check active switches
+  uint8_t retry = 5;
 #ifdef MOMENTARY_SWITCH
   for (int i = 0; i <= 3; i++) {
     if (relayChildID[i] != NULL && digitalRead(switchButtonPin[i]) == 1) {
@@ -178,7 +178,7 @@ uint8_t retry = 5;
   //sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
 #endif
 
- // Get the battery Voltage
+   // Get the battery Voltage
   int sensorValue = analogRead(BATTERY_SENSE_PIN);
   /* 1M, 470K divider across battery and using internal ADC ref of 1.1V1
    * ((1e6+470e3)/470e3)*1.1 = Vmax = 3.44 Volts
@@ -190,17 +190,18 @@ uint8_t retry = 5;
    * 2.5V ~ 750 
    * 2.0V ~ 600
    */
-
+  
   //  Serial.print("sensorValue: "); Serial.println(sensorValue); 
   int batteryPcnt = (sensorValue - 600)  / 3;
   
   batteryPcnt = batteryPcnt > 0 ? batteryPcnt:0; // Cut down negative values. Just in case the battery goes below 2V (2.5V) and the node still working. 
   batteryPcnt = batteryPcnt < 100 ? batteryPcnt:100; // Cut down more than "100%" values. In case of ADC fluctuations. 
-
+  
   if (oldBatteryPcnt != batteryPcnt ) {
     //Power up radio after sleep
     // sendBatteryLevel(batteryPcnt);
     oldBatteryPcnt = batteryPcnt;
   }
+  _flash.sleep();
   sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
 }
