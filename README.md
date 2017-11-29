@@ -11,6 +11,7 @@
 
 ## Specification: ##
  - Dimensions 32x50mm
+ - Sleep current consumption 5uA
  - Hardware switches controller with hardware debouncer. No need to do <br>
    any debouncer code in the sketch plus it saves some battery as no processor <br> time involved in the debouncing process
  - 4 external switch connectors
