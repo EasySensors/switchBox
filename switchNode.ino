@@ -112,6 +112,15 @@ void before()
   for (int i = 0; i <= 3; i++) {
     pinMode(switchButtonPin[i], INPUT);
   }
+
+/* Send JDEC to sleep 
+ *  all of _flash.initialize(); _flash.sleep(); and _flash.wakeup();
+ *  need to be wrapped with noInterrupts(); - interrupts();
+ */
+  noInterrupts();
+  _flash.initialize();
+  _flash.sleep();
+  interrupts();
 }
 
 void presentation() {
@@ -140,8 +149,6 @@ void loop(){
   // Buttons state values array
   static uint8_t  readValue =  0;
   static  uint8_t last_value[4] = {NULL, NULL, NULL, NULL};
-  
-  _flash.wakeup();
   
   // Check active switches
   uint8_t retry = 5;
@@ -202,6 +209,6 @@ void loop(){
     // sendBatteryLevel(batteryPcnt);
     oldBatteryPcnt = batteryPcnt;
   }
-  _flash.sleep();
+  
   sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
 }
