@@ -71,7 +71,7 @@ Code |	Description
 #define MY_SIGNING_ATSHA204 <br>#define  MY_SIGNING_REQUEST_SIGNATURES | Define if you like to use Crypto Authentication to secure your nodes<br> from intruders or interference. After that, you have to “personalize”<br> all the nodes, which have those, defines enabled.<br> [**How to “personalize” nodes with encryption key**](https://github.com/EasySensors/ButtonSizeNode/blob/master/SecurityPersonalizationHowTo.md).<br> You need both defines in the nodes you need to protect.<br> The Gateway Serial could be with only one of those<br> defines enabled - #define MY_SIGNING_ATSHA204
 sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0); | Sends the Switch Controller into the sleep mode untill<br> somebody press any button. 
 
-Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Arduino IDE and upload the switchNode.ino sketch.
+Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Arduino IDE and upload the switchBox.ino sketch.
 
 **Done**
 
