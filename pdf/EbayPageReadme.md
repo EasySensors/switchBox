@@ -16,9 +16,9 @@ Comes with Arduino example sketch.
 ## Overview
 If you are familiar with Arduino boards, the Switch Box is Arduino pro Mini with onboard HopeRF RFM69-CW 433 MHz radio, external EPROM flash and crypto authentication chip. To save some board dimensions the Switch Box does not have onboard USB-Serial converter. You need to buy FTDI Adapter for programming. HopeRF RFM69-CW provide extremely good range. Hundreds of meters in open areas. External Flash chip allows burning Arduino sketch wirelessly. Onboard Atmel ATSHA204A CryptoAuthentication chip secures communication with other controllers. Some IOT ideas based on the Switch Box and similar controllers plus complete specs you may find here [my GitHub page](https://github.com/EasySensors/switchBox)
 
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw1.jpg?raw=true)
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw2.jpg?raw=true)
-![enter image description here](https://github.com/EasySensors/SwitchNode/blob/master/pics/sw3.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-2.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-21.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-22.jpg?raw=true)
 
 Package Content:
 - The Switch Box 1 pcs  
