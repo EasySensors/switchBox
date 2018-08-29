@@ -15,7 +15,7 @@
  - Footprint available for replacing  RFM69-CW with NRF24L01+ 2.4 GHz radio
  - Battery voltage sensor (via divider)
  - FTDI header for programming
- - Battery connectorfor 2 x CR2232
+ - Battery connectorfor 2 x CR2032
  - Reverse polarity protection
  - Can be 1 or 2 momentary switches versions
  - Each button have LED for message delivery confirmation 
