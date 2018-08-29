@@ -18,7 +18,7 @@
  - Battery connectorfor 2 x CR2232
  - Reverse polarity protection
  - Can be 1 or 2 momentary switches versions
- - Each button have LED for message confirmation delivery
+ - Each button have LED for message delivery confirmation 
 
 
 **Pin out:** 
