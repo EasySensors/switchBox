@@ -13,6 +13,7 @@
 - Battery connector: 2 x CR2032
 - Reverse polarity protection
 - High efficient power coverter 
+- Long run soft touch buttons
 
 Comes with Arduino example sketch.
 
