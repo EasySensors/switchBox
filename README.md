@@ -2,9 +2,9 @@
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-21cr.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-22cr.jpg?raw=true)
 
-### The Switch Box (IS6DB2032) is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF RFM69-CW 868\915 MHz radio on board and build in hardware debouncer. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. You may think of it as Arduino Pro Mini plus all the items in the picture below:
+### The Switch Box (IS6DB2032) is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF RFM69 868\915 or NRF24L01+ 2.4 GHz radio on-board. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. You may think of it as Arduino Pro Mini plus all the items in the picture below:
 
-![](https://github.com/EasySensors/SwitchNode/blob/master/pics/replace.jpg?raw=true)
+![](https://github.com/EasySensors/SwitchNode/blob/master/pics/replace.jpg)
 
 
 ## Specification: ##
