@@ -4,20 +4,21 @@
 
 ### The Switch Box (IS6DB2032) is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF RFM69 868\915 or NRF24L01+ 2.4 GHz radio on-board. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. You may think of it as Arduino Pro Mini plus all the items in the picture below:
 
-![](https://github.com/EasySensors/SwitchNode/blob/master/pics/replace.jpg)
+![](https://github.com/EasySensors/SwitchNode/blob/master/pics/replace.jpg?raw=true)
 
 
 ## Specification: ##
  - Dimensions 32x50mm
  - Sleep current consumption 5uA
  - Authentication security - Atmel ATSHA204A Crypto Authentication Chip
- - RFM69-CW (low power consumption version) 433 MHz Radio transceiver
+ - RFM69-CW (low power consumption version)  MHz Radio transceiver
  - Footprint available for replacing  RFM69-CW with NRF24L01+ 2.4 GHz radio
  - Battery voltage sensor (via divider)
  - FTDI header for programming
  - Battery connectorfor 2 x CR2232
  - Reverse polarity protection
  - Can be 1 or 2 momentary switches versions
+ - Each button have LED for message confirmation delivery
 
 
 **Pin out:** 
@@ -27,7 +28,10 @@ Arduino Pins|	Description
 ------------|--------------
 A6 |	Connected to Battery voltage sensor (via divider)
 A3 |	Connected to  ATSHA204A
-D4, D5, D6 | Connected to Switch Connectors JST type
+D4, D8, A0 | Connected to momentary switch buttons
+Interrupt 1 | Occurs when either button pressed
+D5, D6, D7 | Connected to LED's
+
 
 
 **Arduino IDE Settings**
@@ -77,5 +81,3 @@ The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-2.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-21.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-22.jpg?raw=true)
-
->[The board schematics Pdf link](https://github.com/EasySensors/SwitchNode/blob/master/pdf/switchInsertableNode_sch.PDF)
