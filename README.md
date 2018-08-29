@@ -8,7 +8,7 @@
 
 
 ## Specification: ##
- - Dimensions 32x50mm
+ - Dimensions mm
  - Sleep current consumption 5uA
  - Authentication security - Atmel ATSHA204A Crypto Authentication Chip
  - RFM69-CW (low power consumption version) 868\915 MHz Radio transceiver
@@ -18,7 +18,8 @@
  - Battery connectors: 2 x CR2032
  - Reverse polarity protection
  - Can be 1 or 2 momentary switches versions
- - Each button have LED for message delivery confirmation 
+ - Each button have LED for message delivery confirmation
+ - Reset switch
 
 
 **Pin out:** 
