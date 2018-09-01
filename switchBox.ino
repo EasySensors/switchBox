@@ -15,14 +15,15 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * version 2 as published by the Free Software Foundation.
- *
+ * 
 **/
 
 // Enable debug prints to serial monitor
 #define MY_DEBUG
+#define MY_DEBUG_VERBOSE_RFM69
 
 // The switch Node ID
-#define MY_NODE_ID 0x4E
+#define MY_NODE_ID 0x1
 
 
 /* Each JST connector status (On or Off) can be sent to a different Relay or Actuator NodeId address.  
@@ -36,7 +37,7 @@
  * NULL value indicates no switch attached to the corresponding JST connector
 */
 
-int relayNodeID[4] = {0xEE, 0x0, 0x0, 0x0};
+int relayNodeID[4] = {0x0, 0x0, 0x0, 0x0};
 int relayChildID[4] = {1, NULL, NULL, NULL};
 
 // Avoid battery drain if Gateway disconnected and the node sends more than MY_TRANSPORT_STATE_RETRIES times message.
@@ -53,9 +54,16 @@ int relayChildID[4] = {1, NULL, NULL, NULL};
 //#define MY_RADIO_NRF24
 
 #define MY_RADIO_RFM69
-#define MY_RFM69_FREQUENCY   RF69_433MHZ
-//#define MY_RFM69_FREQUENCY    RF69_868MHZ
-//#define MY_RFM69_FREQUENCY    RF69_915MHZ
+
+// if you use MySensors 2.0 use this style 
+//#define MY_RFM69_FREQUENCY   RF69_433MHZ
+//#define MY_RFM69_FREQUENCY   RF69_868MHZ
+//#define MY_RFM69_FREQUENCY   RF69_915MHZ
+
+
+//#define MY_RFM69_FREQUENCY   RFM69_915MHZ
+#define MY_RFM69_FREQUENCY   RFM69_868MHZ
+
 
 //#define MY_RFM69_NEW_DRIVER
 
@@ -63,30 +71,29 @@ int relayChildID[4] = {1, NULL, NULL, NULL};
 //#define MY_SIGNING_ATSHA204
 //#define  MY_SIGNING_REQUEST_SIGNATURES
 
-// Enable OTA feature
-#define MY_OTA_FIRMWARE_FEATURE
-#define MY_OTA_FLASH_JDECID 0x0 //0x2020 
 
-#include <SPI.h>
 #include <MySensors.h>
 
 #define SPIFLASH_BLOCKERASE_32K   0xD8
 #define SPIFLASH_CHIPERASE        0x60
 
-#define SKETCH_NAME "Switch Node "
-#define SKETCH_MAJOR_VER "3"
+#define SKETCH_NAME "Switch Box "
+#define SKETCH_MAJOR_VER "1"
 #define SKETCH_MINOR_VER "0"
 
 #define BUTTONS_INTERUPT_PIN 3
 
 // Initialising array holding Arduino Digital I/O pins for button/reed switches
-int switchButtonPin[4] = {4, 5, 6, 7};
+int switchButtonPin[3] = {4, 8, A0}; 
+
+#define BUTTONS_COUNT 3
+int switchButtonLeds[3] = {5, 6, 7};
 
 int BATTERY_SENSE_PIN = A6;  // select the input pin for the battery sense point
 int oldBatteryPcnt = 0;
 
 // Initialising array holding button state messages
-MyMessage msgSwitch[4];
+MyMessage msgSwitch[3];
 
 void before()
 {
@@ -109,18 +116,30 @@ void before()
 
   // Setup the buttons
   // There is no need to activate internal pull-ups
-  for (int i = 0; i <= 3; i++) {
-    pinMode(switchButtonPin[i], INPUT);
+  for (int i = 0; i < BUTTONS_COUNT; i++) {
+    //pinMode(switchButtonPin[i], INPUT);
+    pinMode(switchButtonPin[i], INPUT_PULLUP);
+    pinMode(switchButtonLeds[i], OUTPUT);
   }
 
-/* Send JDEC to sleep 
- *  all of _flash.initialize(); _flash.sleep(); and _flash.wakeup();
- *  need to be wrapped with noInterrupts(); - interrupts();
- */
-  noInterrupts();
-  _flash.initialize();
-  _flash.sleep();
-  interrupts();
+}
+
+byte getButtonState(int btnNum){
+  if (btnNum == 1){
+    return digitalRead(switchButtonPin[0]);
+  }
+  if (btnNum == 2){
+    return digitalRead(switchButtonPin[1]);
+  }
+  if (btnNum == 3){
+    return digitalRead(switchButtonPin[2]);
+  }
+}
+
+void blinkButtonLed(int btnNum){
+  digitalWrite(switchButtonLeds[btnNum - 1], HIGH);
+  wait(50);
+  digitalWrite(switchButtonLeds[btnNum - 1 ], LOW);
 }
 
 void presentation() {
@@ -131,60 +150,43 @@ void presentation() {
   // You can use S_DOOR, S_MOTION or S_LIGHT here depending on your usage.
   // If S_LIGHT is used, remember to update variable type you send in. See "msg" above.
 
-  for (int i = 0; i <= 3; i++) {
+  for (int i = 0; i < BUTTONS_COUNT; i++) {
     if (relayChildID[i] != NULL) {
       msgSwitch[i] = MyMessage(relayChildID[i], V_LIGHT);
       present(relayChildID[i], S_LIGHT);
     }
   }
-
 }
 
 void setup() {
 
 }
 
-// Loop will iterate on changes on the BUTTON_PINs
+// Loop will iterate on changes if the BUTTON_PINs wake up the controller/node
 void loop(){ 
   // Buttons state values array
   static uint8_t  readValue =  0;
   static  uint8_t last_value[4] = {NULL, NULL, NULL, NULL};
   
-  // Check active switches
   uint8_t retry = 5;
-#ifdef MOMENTARY_SWITCH
-  for (int i = 0; i <= 3; i++) {
-    if (relayChildID[i] != NULL && digitalRead(switchButtonPin[i]) == 1) {
+
+  // Check active switches
+  for (int i = 0; i < BUTTONS_COUNT; i++) {
+    //if (relayChildID[i] != NULL && getButtonState(i+1) == 0) {
+    if (getButtonState(i+1) == 0) {
         //uint8_t loadedState = loadState(relayChildID[i]);
         readValue == 0 ? readValue = 1:readValue = 0;  
         msgSwitch[i].setDestination(relayNodeID[i]);
         while (!send(msgSwitch[i].set(readValue), true)  && retry > 0) { 
           // send did not go through, try  "uint8_t retry = 5" more times
-          sleep(100); retry--;
+          //wait(100); 
+          retry--;
         }
+        blinkButtonLed(i+1);  
     }
   }
-  //sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
-#else
-  for (int i = 0; i <= 3; i++) {
-    if (relayChildID[i] != NULL) {
-      readValue = digitalRead(switchButtonPin[i]);
-      // find which connector(pin) triggered interrupt 
-      if (last_value[i] != readValue) {
-        last_value[i] = readValue;
-        Serial.println("VALUE");
-        Serial.println(readValue);
-        msgSwitch[i].setDestination(relayNodeID[i]);
-        while (!send(msgSwitch[i].set(readValue), true)  && retry > 0) { 
-          // send did not go through, try  "uint8_t retry = 5" more times
-          sleep(100); retry--;
-        }
-      }
-    }
-  }
-  //sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
-#endif
 
+   /* This part of the code needs to be ajusted. Coming soon!!!
    // Get the battery Voltage
   int sensorValue = analogRead(BATTERY_SENSE_PIN);
   /* 1M, 470K divider across battery and using internal ADC ref of 1.1V1
@@ -196,7 +198,7 @@ void loop(){
    * 3.0V ~ 900
    * 2.5V ~ 750 
    * 2.0V ~ 600
-   */
+   
   
   //  Serial.print("sensorValue: "); Serial.println(sensorValue); 
   int batteryPcnt = (sensorValue - 600)  / 3;
@@ -208,7 +210,9 @@ void loop(){
     //Power up radio after sleep
     // sendBatteryLevel(batteryPcnt);
     oldBatteryPcnt = batteryPcnt;
-  }
-  
-  sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0);
+  } */
+
+  sleep(BUTTONS_INTERUPT_PIN - 2, FALLING  , 0); 
 }
+
+
