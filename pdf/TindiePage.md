@@ -1,5 +1,3 @@
-
-
 ### The Switch Box (IS6DB2032) is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF RFM69 868\915 or NRF24L01+ 2.4 GHz radio on-board. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. 
 
 ## Features
