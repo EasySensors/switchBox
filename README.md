@@ -4,7 +4,7 @@
 
 ### The Switch Box (IS6DB2032) is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF RFM69 868\915 or NRF24L01+ 2.4 GHz radio on-board. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. You may think of it as Arduino Pro Mini plus all the items in the picture below:
 
-![](https://github.com/EasySensors/SwitchNode/blob/master/pics/replace.jpg?raw=true)
+![](https://github.com/EasySensors/switchBox/blob/master/pics/replace.jpg?raw=true)
 
 
 ## Specification: ##
@@ -21,7 +21,7 @@
  - Each button have LED for message delivery confirmation
  - Reset switch
 
-If you find the switch box useful it is possible to buy it here: [link to buy]  (https://www.tindie.com/products/easySensors/arduino-ide-compatible-wireless-switch-box)
+If you find the switch box useful it is possible to buy it here: [link to buy](https://www.tindie.com/products/easySensors/arduino-ide-compatible-wireless-switch-box)
 
 **Pin out:** 
 
@@ -59,9 +59,10 @@ How to use it as home automation (IOT) node controller
 switcBox.ino is the Arduino example sketch using [MySensors](https://www.mysensors.org/) API. 
 
 Burn the switcBox.ino sketch into it an it will became  one of the MySensors home automation network Node. 
-To create the network you need controller and at least two Nodes one as a Sensor, relay or switch Node and the other one as “Gateway Serial”. I personally love [Domoticz](https://domoticz.com/) as conroller. Please check this [HowTo](https://github.com/EasySensors/ButtonSizeNode/blob/master/DomoticzInstallMySensors.md) to install Domoticz.
+To create the network you need controller and at least two Nodes one as a Sensor, relay or switch Node and the other one as 
+“Gateway Serial”. I personally love [Domoticz](https://domoticz.com/) as conroller. Please check this [HowTo](https://github.com/EasySensors/ButtonSizeNode/blob/master/DomoticzInstallMySensors.md) to install Domoticz.
 
-However, for no-controller setup, as example, you can use 3 nodes - first node as “Gateway Serial”, second node as relay and last one as switch for that relay. No controller needed then, keep the switch and the relay on the same address and the switch will operate the relay.
+However, for no-controller setup, as example, you can use 3 nodes - first node as “Gateway Serial”, second node as relay and last one as switch for that relay. No controller needed then, keep the switch and the relay on the same address and the switch will operate the  relay.
 
 Things worth mentioning about the  [MySensors](https://www.mysensors.org/) Arduino sketch: 
 
