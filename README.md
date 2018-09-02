@@ -80,6 +80,7 @@ Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Arduino IDE 
 
 The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/Koresh)
 
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-23.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-2.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-21.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-22.jpg?raw=true)
