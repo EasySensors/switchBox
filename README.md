@@ -21,6 +21,7 @@
  - Each button have LED for message delivery confirmation
  - Reset switch
 
+If you find the switch box useful it is possible to buy it here: [link to buy]  (https://www.tindie.com/products/easySensors/arduino-ide-compatible-wireless-switch-box)
 
 **Pin out:** 
 
