@@ -25,4 +25,4 @@ If you are familiar with Arduino boards, the Switch Box is Arduino pro Mini with
 
 Package Content:
 - The Switch Box 1 pcs  
-- No Battery
+- No batteries
