@@ -23,7 +23,7 @@
 #define MY_DEBUG_VERBOSE_RFM69
 
 // The switch Node ID
-#define MY_NODE_ID 0x1
+#define MY_NODE_ID 0x11
 
 
 /* Each JST connector status (On or Off) can be sent to a different Relay or Actuator NodeId address.  
@@ -62,7 +62,7 @@ int relayChildID[4] = {1, NULL, NULL, NULL};
 
 
 //#define MY_RFM69_FREQUENCY   RFM69_915MHZ
-#define MY_RFM69_FREQUENCY   RFM69_868MHZ
+#define MY_RFM69_FREQUENCY   RFM69_433MHZ
 
 
 //#define MY_RFM69_NEW_DRIVER
@@ -141,6 +141,14 @@ void blinkButtonLed(int btnNum){
   wait(50);
   digitalWrite(switchButtonLeds[btnNum - 1 ], LOW);
 }
+void blinkButtonLedFail(int btnNum){
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(switchButtonLeds[btnNum - 1], HIGH);
+    wait(30);
+    digitalWrite(switchButtonLeds[btnNum - 1 ], LOW);
+    wait(30);
+  }
+}
 
 void presentation() {
   // Send the sketch version information to the gateway and Controller
@@ -182,7 +190,7 @@ void loop(){
           //wait(100); 
           retry--;
         }
-        blinkButtonLed(i+1);  
+        (retry > 0) ? blinkButtonLed(i+1) : blinkButtonLedFail(i+1);
     }
   }
 
@@ -214,5 +222,3 @@ void loop(){
 
   sleep(BUTTONS_INTERUPT_PIN - 2, FALLING  , 0); 
 }
-
-
