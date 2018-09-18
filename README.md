@@ -30,7 +30,7 @@ Arduino Pins|	Description
 A6 |	Connected to Battery voltage sensor (via divider)
 A3 |	Connected to  ATSHA204A
 D4, D8, A0 | Connected to momentary switch buttons
-Interrupt 1 | Occurs when either button pressed
+Interrupt 1 | Occurs when either button is pressed
 D5, D6, D7 | Connected to LED's
 
 
