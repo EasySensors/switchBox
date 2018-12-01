@@ -23,31 +23,56 @@
 #define MY_DEBUG_VERBOSE_RFM69
 
 // The switch Node ID
-#define MY_NODE_ID 0x11
+#define MY_NODE_ID 0x43
 
 
-/* Each JST connector status (On or Off) can be sent to a different Relay or Actuator NodeId address.  
+/* Each Button status (On or Off) can be sent to a different Relay or Actuator NodeId address.  
  *  relayNodeID stores Relay or Actuator NodeId addresses. Each adress can have different Child\Sensor ID.  
  *  relayChildID is Child\Sensor ID's array. 
- * int relayNodeID[4] = {0xF2, 0xA0, 0x0, 0x0}; 
- * int relayChildID[4] = {1, 2, NULL, NULL};
- * above declaration means: JST connector 1 will send it state to assigned Relay Address 0xF2 with Child\Sensor ID 1. 
- * JST connector 2 will send it state to assigned Relay Address 0xA0 with Child\Sensor ID 2. 
- * JST connectors 3 - 4 have no attached sensorsors and will not be "presented" since there NULL values.
- * NULL value indicates no switch attached to the corresponding JST connector
+ * int relayNodeID[3] = {0xF2, 0xA0,0x0}; 
+ * int relayChildID[3] = {1, 2, NULL};
+ * above declaration means: Button 1 will send it state to assigned Relay Address 0xF2 with Child\Sensor ID 1. 
+ * Button 2 will send it state to assigned Relay Address 0xA0 with Child\Sensor ID 2. 
+ * Button 3 have no attached sensorsors and will not be "presented" since there is NULL value.
+ * NULL value means no need to report\present it to cntroller;
 */
 
-int relayNodeID[4] = {0x0, 0x0, 0x0, 0x0};
-int relayChildID[4] = {1, NULL, NULL, NULL};
+//#define ONE_BUTTON_SWITCH
+//#define TWO_BUTTONS_SWITCH 
+#define THREE_BUTTON_SWITCH    // all buttons will work
+
+// Arduino pinout in the picture here: https://github.com/EasySensors/switchBox/blob/master/pics/pinuot.jpg
+
+#ifdef ONE_BUTTON_SWITCH
+  int relayNodeID[1] = {0xf6}; 
+  int relayChildID[1] = {1}; 
+  #define NUMBER_OF_BUTTONS 1
+  int switchButtonPin[1] = {8};  // D8 for switch
+  int switchButtonLeds[1] = {6};  //D6 for LED. Although one switch enclosure is not transparent enough for LED.
+#endif
+
+#ifdef TWO_BUTTON_SWITCH
+  int relayNodeID[2] = {0xf6, 0xf6}; // Relay addressess for reach button to send switch ON\OFF states. Can be any address;
+  int relayChildID[3] = {1, 1}; //NULL value means no need to report\present it to cntroller;
+  #define NUMBER_OF_BUTTONS 2
+  int switchButtonPin[2] = {4,A0};  // D4, A0 for switches
+  int switchButtonLeds[2] = {5,7}; // D5, D7 for LED's.
+#endif
+
+#ifdef THREE_BUTTON_SWITCH
+  int relayNodeID[3] = {0xf6, 0xf6, 0xf6}; // Relay addressess for reach button to send switch ON\OFF states. Can be any address;
+  int relayChildID[3] = {1, 1, 1}; //NULL value means no need to report\present it to cntroller;
+  #define NUMBER_OF_BUTTONS 3
+  int switchButtonPin[3] = {4, 8, A0}; // D4, D8, A0 for switches
+  int switchButtonLeds[3] = {5, 6, 7}; // D5, D6, D7 for LED's.
+#endif
+
 
 // Avoid battery drain if Gateway disconnected and the node sends more than MY_TRANSPORT_STATE_RETRIES times message.
 #define MY_TRANSPORT_UPLINK_CHECK_DISABLED
 #define MY_PARENT_NODE_IS_STATIC
 #define MY_PARENT_NODE_ID 0
 
-// Type of switches connected to the white JST connectors on the board.
-// Momentary is notebook style key.
-#define MOMENTARY_SWITCH
 
 // Enable and select radio type attached
 
@@ -60,17 +85,14 @@ int relayChildID[4] = {1, NULL, NULL, NULL};
 //#define MY_RFM69_FREQUENCY   RF69_868MHZ
 //#define MY_RFM69_FREQUENCY   RF69_915MHZ
 
-
 //#define MY_RFM69_FREQUENCY   RFM69_915MHZ
 #define MY_RFM69_FREQUENCY   RFM69_433MHZ
-
 
 //#define MY_RFM69_NEW_DRIVER
 
 // Enable Crypto Authentication to secure the node
 //#define MY_SIGNING_ATSHA204
 //#define  MY_SIGNING_REQUEST_SIGNATURES
-
 
 #include <MySensors.h>
 
@@ -83,12 +105,6 @@ int relayChildID[4] = {1, NULL, NULL, NULL};
 
 #define BUTTONS_INTERUPT_PIN 3
 
-// Initialising array holding Arduino Digital I/O pins for button/reed switches
-int switchButtonPin[3] = {4, 8, A0}; 
-
-#define BUTTONS_COUNT 3
-int switchButtonLeds[3] = {5, 6, 7};
-
 int BATTERY_SENSE_PIN = A6;  // select the input pin for the battery sense point
 int oldBatteryPcnt = 0;
 
@@ -97,8 +113,7 @@ MyMessage msgSwitch[3];
 
 void before()
 {
-  analogReference(INTERNAL);
-
+  analogReference(INTERNAL); //DEFAULT  
   #ifdef  MY_RADIO_RFM69
     /*  RFM reset pin is 9
      *  A manual reset of the RFM69HCW\CW is possible even for applications in which VDD cannot be physically disconnected.
@@ -116,23 +131,10 @@ void before()
 
   // Setup the buttons
   // There is no need to activate internal pull-ups
-  for (int i = 0; i < BUTTONS_COUNT; i++) {
+  for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
     //pinMode(switchButtonPin[i], INPUT);
     pinMode(switchButtonPin[i], INPUT_PULLUP);
     pinMode(switchButtonLeds[i], OUTPUT);
-  }
-
-}
-
-byte getButtonState(int btnNum){
-  if (btnNum == 1){
-    return digitalRead(switchButtonPin[0]);
-  }
-  if (btnNum == 2){
-    return digitalRead(switchButtonPin[1]);
-  }
-  if (btnNum == 3){
-    return digitalRead(switchButtonPin[2]);
   }
 }
 
@@ -141,6 +143,7 @@ void blinkButtonLed(int btnNum){
   wait(50);
   digitalWrite(switchButtonLeds[btnNum - 1 ], LOW);
 }
+
 void blinkButtonLedFail(int btnNum){
   for (int i = 0; i < 4; i++) {
     digitalWrite(switchButtonLeds[btnNum - 1], HIGH);
@@ -158,7 +161,7 @@ void presentation() {
   // You can use S_DOOR, S_MOTION or S_LIGHT here depending on your usage.
   // If S_LIGHT is used, remember to update variable type you send in. See "msg" above.
 
-  for (int i = 0; i < BUTTONS_COUNT; i++) {
+  for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
     if (relayChildID[i] != NULL) {
       msgSwitch[i] = MyMessage(relayChildID[i], V_LIGHT);
       present(relayChildID[i], S_LIGHT);
@@ -174,17 +177,13 @@ void setup() {
 void loop(){ 
   // Buttons state values array
   static uint8_t  readValue =  0;
-  static  uint8_t last_value[4] = {NULL, NULL, NULL, NULL};
-  
   uint8_t retry = 5;
 
   // Check active switches
-  for (int i = 0; i < BUTTONS_COUNT; i++) {
-    //if (relayChildID[i] != NULL && getButtonState(i+1) == 0) {
-    if (getButtonState(i+1) == 0) {
-        //uint8_t loadedState = loadState(relayChildID[i]);
-        readValue == 0 ? readValue = 1:readValue = 0;  
-        msgSwitch[i].setDestination(relayNodeID[i]);
+  for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
+    if (digitalRead(switchButtonPin[i]) == 0 && relayChildID[i] != NULL) { //digitalRead( 
+        readValue == 0 ? readValue = 1:readValue = 0;  // inverting the value each push
+        msgSwitch[i].setDestination(relayNodeID[i]); 
         while (!send(msgSwitch[i].set(readValue), true)  && retry > 0) { 
           // send did not go through, try  "uint8_t retry = 5" more times
           //wait(100); 
@@ -194,31 +193,21 @@ void loop(){
     }
   }
 
-   /* This part of the code needs to be ajusted. Coming soon!!!
-   // Get the battery Voltage
+  // Get the battery Voltage
   int sensorValue = analogRead(BATTERY_SENSE_PIN);
-  /* 1M, 470K divider across battery and using internal ADC ref of 1.1V1
-   * ((1e6+470e3)/470e3)*1.1 = Vmax = 3.44 Volts
-   * The MySensors Lib uses internal ADC ref of 1.1V which means analogRead of the pin connected to 470kOhms Battery Devider reaches  
-   * 1023 when voltage on the divider is around 3.44 Volts. 2.5 volts is equal to 750. 2 volts is equal to 600. 
-   * RFM 69 CW works stable up to 2 volts. Assume 2.5 V is 0% and 1023 is 100% battery charge    
-   * 3.3V ~ 1023
-   * 3.0V ~ 900
-   * 2.5V ~ 750 
-   * 2.0V ~ 600
-   
+  /* 1M, 470K divider across batteries
+   * 610 ~ 100 % is close to 6.1 V
+   * 400 ~ 0 % is close to 4V
+   */
+  int batteryPcnt = (sensorValue - 400)  / 2;
   
-  //  Serial.print("sensorValue: "); Serial.println(sensorValue); 
-  int batteryPcnt = (sensorValue - 600)  / 3;
-  
-  batteryPcnt = batteryPcnt > 0 ? batteryPcnt:0; // Cut down negative values. Just in case the battery goes below 2V (2.5V) and the node still working. 
+  batteryPcnt = batteryPcnt > 0 ? batteryPcnt:0; // Cut down negative values. Just in case the battery goes below 4V and the node still working. 
   batteryPcnt = batteryPcnt < 100 ? batteryPcnt:100; // Cut down more than "100%" values. In case of ADC fluctuations. 
-  
-  if (oldBatteryPcnt != batteryPcnt ) {
-    //Power up radio after sleep
-    // sendBatteryLevel(batteryPcnt);
-    oldBatteryPcnt = batteryPcnt;
-  } */
 
+  if (oldBatteryPcnt != batteryPcnt ) {
+    wait(100);
+    sendBatteryLevel(batteryPcnt);
+    oldBatteryPcnt = batteryPcnt;
+  }
   sleep(BUTTONS_INTERUPT_PIN - 2, FALLING  , 0); 
 }
