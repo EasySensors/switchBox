@@ -38,8 +38,8 @@
 */
 
 //#define ONE_BUTTON_SWITCH
-//#define TWO_BUTTONS_SWITCH 
-#define THREE_BUTTON_SWITCH    // all buttons will work
+#define TWO_BUTTONS_SWITCH 
+//#define THREE_BUTTON_SWITCH    // all buttons will work
 
 // Arduino pinout in the picture here: https://github.com/EasySensors/switchBox/blob/master/pics/pinuot.jpg
 
@@ -51,7 +51,7 @@
   int switchButtonLeds[1] = {6};  //D6 for LED. Although one switch enclosure is not transparent enough for LED.
 #endif
 
-#ifdef TWO_BUTTON_SWITCH
+#ifdef TWO_BUTTONS_SWITCH
   int relayNodeID[2] = {0xf6, 0xf6}; // Relay addressess for reach button to send switch ON\OFF states. Can be any address;
   int relayChildID[3] = {1, 1}; //NULL value means no need to report\present it to cntroller;
   #define NUMBER_OF_BUTTONS 2
@@ -86,7 +86,9 @@
 //#define MY_RFM69_FREQUENCY   RF69_915MHZ
 
 //#define MY_RFM69_FREQUENCY   RFM69_915MHZ
-#define MY_RFM69_FREQUENCY   RFM69_433MHZ
+#define MY_RFM69_FREQUENCY   RF69_868MHZ
+//#define MY_RFM69_FREQUENCY   RFM69_433MHZ
+
 
 //#define MY_RFM69_NEW_DRIVER
 
@@ -130,7 +132,6 @@ void before()
   #endif
 
   // Setup the buttons
-  // There is no need to activate internal pull-ups
   for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
     //pinMode(switchButtonPin[i], INPUT);
     pinMode(switchButtonPin[i], INPUT_PULLUP);
