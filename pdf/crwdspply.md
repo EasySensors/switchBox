@@ -34,5 +34,21 @@ Secured handshake can be used, backed by ATSHA204A Crypto Authentication chip.
 
 ![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/proto2.jpg?raw=true)
 ![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/proto1.jpg?raw=true)
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/proto3.jpg?raw=true)
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/proto4.jpg?raw=true)
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/proto5.jpg?raw=true)
 
 
+### Challenges
+The wide variety of the frequencies could present an additional challenge.
+The Switchbox antenna design is based on the successful TI design.
+These proven designs reduces the challenges, but the antennas itself shares a lot of the “bench testing” to achieve maximum range. Sometimes it is very much time consuming because it is enclosure and body finger\palm dependent.
+
+### Antenna resonance impedance tuning. 
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/protoTune.jpg?raw=true)
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/protoTune2.jpg?raw=true)
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/protoTune3.jpg?raw=true)
+
+### Antenna SWR  matching. 
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/protoTuneSWR.jpg?raw=true)
+![easy Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/protoTuneSWR2.jpg?raw=true)
