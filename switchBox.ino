@@ -20,7 +20,7 @@
 
 // Enable debug prints to serial monitor
 #define MY_DEBUG
-#define MY_DEBUG_VERBOSE_RFM69
+//#define MY_DEBUG_VERBOSE_RFM69
 
 // The switch Node ID
 #define MY_NODE_ID 0x43
@@ -52,8 +52,8 @@
 #endif
 
 #ifdef TWO_BUTTONS_SWITCH
-  int relayNodeID[2] = {0xf6, 0xf6}; // Relay addressess for reach button to send switch ON\OFF states. Can be any address;
-  int relayChildID[3] = {1, 1}; //NULL value means no need to report\present it to cntroller;
+  int relayNodeID[2] = {0x0, 0x0}; // Relay addressess for reach button to send switch ON\OFF states. Can be any address;
+  int relayChildID[3] = {4, 4}; //NULL value means no need to report\present it to cntroller;
   #define NUMBER_OF_BUTTONS 2
   int switchButtonPin[2] = {4,A0};  // D4, A0 for switches
   int switchButtonLeds[2] = {5,7}; // D5, D7 for LED's.
@@ -79,16 +79,17 @@
 //#define MY_RADIO_NRF24
 
 #define MY_RADIO_RFM69
+//#define MY_RADIO_RFM95
+//#define MY_RFM95_MODEM_CONFIGRUATION RFM95_BW125CR48SF4096   //RFM95_BW125CR45SF128
+//#define MY_RFM95_TX_POWER_DBM (20u)
 
-// if you use MySensors 2.0 use this style 
-//#define MY_RFM69_FREQUENCY   RF69_433MHZ
-//#define MY_RFM69_FREQUENCY   RF69_868MHZ
-//#define MY_RFM69_FREQUENCY   RF69_915MHZ
 
-//#define MY_RFM69_FREQUENCY   RFM69_915MHZ
-#define MY_RFM69_FREQUENCY   RF69_868MHZ
+//#define MY_IS_RFM69HW
+#define MY_RFM69_FREQUENCY   RFM69_915MHZ
+//#define MY_RFM69_FREQUENCY   RFM69_868MHZ
 //#define MY_RFM69_FREQUENCY   RFM69_433MHZ
-
+ 
+//#define   MY_RFM95_FREQUENCY RFM95_868MHZ
 
 //#define MY_RFM69_NEW_DRIVER
 
@@ -115,7 +116,7 @@ MyMessage msgSwitch[3];
 
 void before()
 {
-  analogReference(INTERNAL); //DEFAULT  
+  analogReference(DEFAULT); //  INTERNAL
   #ifdef  MY_RADIO_RFM69
     /*  RFM reset pin is 9
      *  A manual reset of the RFM69HCW\CW is possible even for applications in which VDD cannot be physically disconnected.
@@ -166,6 +167,7 @@ void presentation() {
     if (relayChildID[i] != NULL) {
       msgSwitch[i] = MyMessage(relayChildID[i], V_LIGHT);
       present(relayChildID[i], S_LIGHT);
+      blinkButtonLed(i+1);
     }
   }
 }
@@ -182,15 +184,13 @@ void loop(){
 
   // Check active switches
   for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
-    if (digitalRead(switchButtonPin[i]) == 0 && relayChildID[i] != NULL) { //digitalRead( 
+    if (digitalRead(switchButtonPin[i]) == 0 && relayChildID[i] != NULL) {  
         readValue == 0 ? readValue = 1:readValue = 0;  // inverting the value each push
         msgSwitch[i].setDestination(relayNodeID[i]); 
-        while (!send(msgSwitch[i].set(readValue), true)  && retry > 0) { 
-          // send did not go through, try  "uint8_t retry = 5" more times
-          //wait(100); 
-          retry--;
-        }
-        (retry > 0) ? blinkButtonLed(i+1) : blinkButtonLedFail(i+1);
+        bool stat =  send(msgSwitch[i].set(readValue), true);
+        // wait for ACK signal up to 2500 miliseconds
+        wait(2500, 1, 2);
+        stat ? blinkButtonLed(i+1) : blinkButtonLedFail(i+1);
     }
   }
 
@@ -206,9 +206,9 @@ void loop(){
   batteryPcnt = batteryPcnt < 100 ? batteryPcnt:100; // Cut down more than "100%" values. In case of ADC fluctuations. 
 
   if (oldBatteryPcnt != batteryPcnt ) {
-    wait(100);
     sendBatteryLevel(batteryPcnt);
     oldBatteryPcnt = batteryPcnt;
   }
+
   sleep(BUTTONS_INTERUPT_PIN - 2, FALLING  , 0); 
 }
