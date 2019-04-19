@@ -37,8 +37,9 @@
  * NULL value means no need to report\present it to cntroller;
 */
 
-//#define ONE_BUTTON_SWITCH
 #define TWO_BUTTONS_SWITCH 
+
+//#define ONE_BUTTON_SWITCH
 //#define THREE_BUTTON_SWITCH    // all buttons will work
 
 // Arduino pinout in the picture here: https://github.com/EasySensors/switchBox/blob/master/pics/pinuot.jpg
@@ -78,20 +79,23 @@
 
 //#define MY_RADIO_NRF24
 
-#define MY_RADIO_RFM69
-//#define MY_RADIO_RFM95
-//#define MY_RFM95_MODEM_CONFIGRUATION RFM95_BW125CR48SF4096   //RFM95_BW125CR45SF128
-//#define MY_RFM95_TX_POWER_DBM (20u)
-
-
+//#define MY_RADIO_RFM69
 //#define MY_IS_RFM69HW
+
 #define MY_RFM69_FREQUENCY   RFM69_915MHZ
 //#define MY_RFM69_FREQUENCY   RFM69_868MHZ
 //#define MY_RFM69_FREQUENCY   RFM69_433MHZ
- 
-//#define   MY_RFM95_FREQUENCY RFM95_868MHZ
+//#define MY_RFM69_NEW_DRIVER  
 
-//#define MY_RFM69_NEW_DRIVER
+
+#define MY_RADIO_RFM95
+#define MY_RFM95_MODEM_CONFIGRUATION RFM95_BW_500KHZ | RFM95_CODING_RATE_4_5, RFM95_SPREADING_FACTOR_2048CPS | RFM95_RX_PAYLOAD_CRC_ON, RFM95_AGC_AUTO_ON // 
+#define MY_RFM95_TX_POWER_DBM (20u)
+
+#define   MY_RFM95_FREQUENCY RFM95_915MHZ
+//#define   MY_RFM95_FREQUENCY RFM95_868MHZ
+//#define   MY_RFM95_FREQUENCY RFM95_433MHZ
+
 
 // Enable Crypto Authentication to secure the node
 //#define MY_SIGNING_ATSHA204
