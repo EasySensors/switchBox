@@ -1,27 +1,49 @@
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-2cr.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-21cr.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-22cr.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox2_cr.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox3.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox4.jpg?raw=true)
 
-### The Switch Box (IS6DB2032) is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF RFM69 868\915 or NRF24L01+ 2.4 GHz radio on-board. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. You may think of it as Arduino Pro Mini plus all the items in the picture below:
+### The Switch Box  is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF LoRa RFM95 / 69 433/868/915 radio on-board. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. You may think of it as Arduino Pro Mini plus all the items in the picture below:
 
 ![](https://github.com/EasySensors/switchBox/blob/master/pics/replace2.jpg?raw=true)
 
+# Features & Specifications
+### IDE Control: 
+- Fully compatible with the Arduino IDE
+- Enumerates as an Arduino Pro Mini @ 8 MHz
+- Compatible with all RFM 69 \ 95 compatible open source libraries available
+### Radio Transceivers:  
+Three transceiver options are available
+- HopeRF RFM95 LoRa® 433/868/915 MHz (long-range version)
+- HopeRF RFM69-HCW 433/868/915 MHz (mid-range version)
+- HopeRF RFM69-CW 433/868/915 MHz (low power consumption version)
+- Footprint available for replacing  RFM radios with NRF24L01+ 2.4 GHz radio
+### Security: 
+- On-board Atmel/Microchip ATSHA204A crypto-authentication chip provides secured handshakes
+### Antennas: 
+Tuned PCB antenna options that are soldered to the main board
+- 915 MHz - United States, Canada, Australia
+- 868 MHz - Europe
+- 433 MHz - Europe
+### Interface: 
+- Long-run soft-touch buttons similar to high-quality home switches
+- Each button has a built-in LED for message delivery confirmation
+- Reset switch
+### Power: 
+Utilizes two CR2032 coin cell batteries
+- On-board coin cell holders
+- Reverse polarity protection
+- High-efficiency power converter
+- Batteries can last as long as two years with daily use
+- Battery voltage sensor (via divider)
+- Sleep current consumption 5uA
+### Mounting: 
+Two options are provided for mounting
+- Adhesive tape on the back
+- Screws through holes in the back plate
 
-## Specification: ##
- - Dimensions mm
- - Sleep current consumption 5uA
- - Authentication security - Atmel ATSHA204A Crypto Authentication Chip
- - RFM69-CW (low power consumption version) 868\915 MHz Radio transceiver
- - Footprint available for replacing  RFM69-CW with NRF24L01+ 2.4 GHz radio
- - Battery voltage sensor (via divider)
- - FTDI header for programming
- - Battery connectors: 2 x CR2032
- - Reverse polarity protection
- - Can be 1 or 2 momentary switches versions
- - Each button have LED for message delivery confirmation
- - Reset switch
 
-If you find the switch box useful, it is possible to buy it here: [link to buy](https://www.tindie.com/products/easySensors/arduino-ide-compatible-wireless-switch-box)
+ 
+If you find the switch box useful, it is possible to buy it here: [link to buy](https://www.crowdsupply.com/easysensors/easyswitchbox)
 
 **Pin out:** 
 
@@ -49,38 +71,44 @@ D5, D6, D7 | Connected to LED's
 
 3.3V power option should be used.
 
+### the Arduino example sketches
+
+Easy sensors API sketches
+EasySwitchBoxMySensors.ino  - the switchBox Sketch
+GatewaySerialMySensors.ino - the receiver serial Gateway Sketch
+
+Moteino API sketches  
+Moteino.ino  - the switchBox Sketch
+MoteinoGW.ino  the receiver Sketch
+
+RadioHead API sketches  
+rf95_reliable_datagram_server.ino  the receiver Sketch
+RHswitchBox.ino  - the switchBox Sketch
+
+Design files link.
+https://circuitmaker.com/Projects/Details/Yury-Sviryda/EasySwitchBox
 
 
 How to use it as home automation (IOT) node controller
 ------------------------------------------------------
 
+EasySwitchBoxMySensors.ino is the Arduino example sketch using [MySensors](https://www.mysensors.org/) API. 
 
-switcBox.ino is the Arduino example sketch using [MySensors](https://www.mysensors.org/) API. 
-
-Burn the switcBox.ino sketch into it an it will became  one of the MySensors home automation network Node. 
+Burn the sketch into and the switchBox will became  one of the MySensors home automation network Node. 
 To create the network you need controller and at least two Nodes one as a Sensor, relay or switch Node and the other one as 
 “Gateway Serial”. I personally love [Domoticz](https://domoticz.com/) as conroller. Please check this [HowTo](https://github.com/EasySensors/ButtonSizeNode/blob/master/DomoticzInstallMySensors.md) to install Domoticz.
 
-However, for no-controller setup, as example, you can use 3 nodes - first node as “Gateway Serial”, second node as relay and last one as switch for that relay. No controller needed then, keep the switch and the relay on the same address and the switch will operate the  relay.
-
-Things worth mentioning about the  [MySensors](https://www.mysensors.org/) Arduino sketch: 
-
-
-Code |	Description
-------------|--------------
-#define MY_RADIO_RFM69<br>#define MY_RFM69_FREQUENCY   RF69_433MHZ<br>#define MY_IS_RFM69HW|	Define which radio we use – here is RFM 69<br>with frequency 433 MHZ and it is HW<br>type – one of the most powerful RFM 69 radios.<br>If your radio is RFM69CW - comment out line<br>with // #define MY_IS_RFM69HW 
-#define MY_NODE_ID 0xE0 | Define Node address (0xE0 here). I prefer to use static addresses<br> and in Hexadecimal since it is easier to identify the node<br> address in  [Domoticz](https://domoticz.com/) devices list after it<br> will be discovered by controller ( [Domoticz](https://domoticz.com/)).<br> However, you can use AUTO instead of the hardcoded number<br> (like 0xE0) though.  [Domoticz](https://domoticz.com/) will automatically assign node ID then.
-#define MY_SIGNING_ATSHA204 <br>#define  MY_SIGNING_REQUEST_SIGNATURES | Define if you like to use Crypto Authentication to secure your nodes<br> from intruders or interference. After that, you have to “personalize”<br> all the nodes, which have those, defines enabled.<br> [**How to “personalize” nodes with encryption key**](https://github.com/EasySensors/ButtonSizeNode/blob/master/SecurityPersonalizationHowTo.md).<br> You need both defines in the nodes you need to protect.<br> The Gateway Serial could be with only one of those<br> defines enabled - #define MY_SIGNING_ATSHA204
-sleep(BUTTONS_INTERUPT_PIN - 2, RISING, 0); | Sends the Switch Controller into the sleep mode untill<br> somebody press any button. 
-
-Connect the Node to FTDI USB adaptor, select Pro Mini 8MHz board in Arduino IDE and upload the switchBox.ino sketch.
-
 **Done**
-
 
 The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/Koresh)
 
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-233.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-2.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-21.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox2.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox3.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox4.jpg?raw=true)
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox7.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-22.jpg?raw=true)
+
+### Prototype history
+
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox6.jpg?raw=true)
+
