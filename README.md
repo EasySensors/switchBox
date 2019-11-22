@@ -102,11 +102,7 @@ To create the network you need controller and at least two Nodes one as a Sensor
 
 The board is created by  [Koresh](https://www.openhardware.io/user/143/projects/Koresh)
 
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox2.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox3.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox4.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox7.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/arduino-Switch-Box-22.jpg?raw=true)
+
 
 ### Prototype history
 
