@@ -1,7 +1,6 @@
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox2_cr.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox3.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox4.jpg?raw=true)
-![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/buttonsLEDPinout.png?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/screwHoles.png?raw=true)
 
 ### The Switch Box  is a low cost wireless Arduino IDE compatible (the Atmel ATMega328P) microcontroller with HopeRF LoRa RFM95 / 69 433/868/915 radio on-board. Best sutable for Home Automation, IOT. Could be used as switch board for radio controlling any DIY project. You may think of it as Arduino Pro Mini plus all the items in the picture below:
@@ -58,7 +57,7 @@ D4, D8, A0 | Connected to momentary switch buttons
 Interrupt 1 | Occurs when either button is pressed
 D5, D6, D7 | Connected to LED's
 
-
+![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/buttonsLEDPinout.png?raw=true)
 
 **Arduino IDE Settings**
 
