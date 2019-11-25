@@ -19,7 +19,7 @@ RHReliableDatagram manager(driver, CLIENT_ADDRESS);
 int BATTERY_SENSE_PIN = A6;  // select the input pin for the battery sense point
 int oldBatteryPcnt = 0;
 
-// Arduino pinout in the picture here: https://github.com/EasySensors/switchBox/blob/master/pics/pinuot.jpg
+// Arduino pinout in the picture here: https://github.com/EasySensors/switchBox/blob/master/pics/buttonsLEDPinout.png
 
 int relayNodeID[2] = {1, 1}; // Relay addressess for reach button to send switch ON\OFF states. Can be any address; 0 is SmartHome controller address.
 int relayChildID[2] = {1, 2}; //NULL value means no need to report\present it to cntroller;
