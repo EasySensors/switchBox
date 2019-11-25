@@ -76,15 +76,15 @@ D5, D6, D7 | Connected to LED's
 
 ### the Arduino example sketches
 
-Easy sensors API sketches
+Easy sensors API sketches. Can use both LoRa RFM95 and RFM69 radios
 EasySwitchBoxMySensors.ino  - the switchBox Sketch
 GatewaySerialMySensors.ino - the receiver serial Gateway Sketch
 
-Moteino API sketches  
+Moteino API sketches. RFM69 radio used
 Moteino.ino  - the switchBox Sketch
 MoteinoGW.ino  the receiver Sketch
 
-RadioHead API sketches  
+RadioHead API sketches. LoRaRFM95 radio used  
 rf95_reliable_datagram_server.ino  the receiver Sketch
 RHswitchBox.ino  - the switchBox Sketch
 
