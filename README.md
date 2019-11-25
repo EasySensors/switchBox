@@ -42,6 +42,7 @@ Utilizes two CR2032 coin cell batteries
 Two options are provided for mounting
 - Adhesive tape on the back
 - Screws through holes in the back plate
+- Dimensions 86\*86\*16 mm
 
 
  
