@@ -22,8 +22,13 @@
 #define MY_DEBUG
 //#define MY_DEBUG_VERBOSE_RFM69
 
+// The switch battery Voltage sense Divider 3M/470K Define. Comment it out if 1M/470K divider installed (before 2019 versions)  ---------------------------------------------------------
+
+  #define DIVIDER_3M
+
+
 // The switch Node ID  ---------------------------------------------------------
-#define MY_NODE_ID  177 //0xBc  // 0xBe // AUTO
+#define MY_NODE_ID  185 //0xBc  // 0xBe // AUTO
 
 
 /* Each Button status (On or Off) can be sent to a different Relay or Actuator NodeId address.  
@@ -49,8 +54,10 @@
 //---------------------------------------------------------------------------------------
 #define NUMBER_OF_BUTTONS 2
 
-int relayNodeID[2] = {0, 0}; // 0x .. is the relay addressess for each button to send switch ON\OFF states. Can be any address; 0 is SmartHome controller address.
-int relayChildID[2] = {4,4}; //{4,4}; //0 value means no need to report\present it to cntroller;
+int relayNodeID[2] = {72, 72}; // 0x .. is the relay addressess for each button to send switch ON\OFF states. Can be any address; 0 is SmartHome controller address.
+int relayChildID[2] = {42,42}; //{4,4}; //0 value means no need to report\present it to cntroller;
+
+
 
 int switchButtonPin[2] = {4,A0};  //Arduino Pins D4, A0 are for switches
 int switchButtonLeds[2] = {5,7}; // Arduino Pins D5, D7 are for LED's.
@@ -93,6 +100,8 @@ int switchButtonLeds[2] = {5,7}; // Arduino Pins D5, D7 are for LED's.
 #define SKETCH_MAJOR_VER "2"
 #define SKETCH_MINOR_VER "0"
 
+
+// 
 #define BUTTONS_INTERUPT_PIN 3
 
 int BATTERY_SENSE_PIN = A6;  // select the input pin for the battery sense point
@@ -104,8 +113,12 @@ MyMessage msgSwitch[2];
 
 void before()
 {
-  analogReference(INTERNAL); //  DEFAULT  
 
+  #ifdef DIVIDER_3M 
+    analogReference(INTERNAL);   
+  #else if
+    analogReference(DEFAULT);         
+  #endif
  
   
   #ifdef  MY_RADIO_RFM69 or MY_RADIO_RFM95
@@ -119,6 +132,7 @@ void before()
     digitalWrite(9, 1);
     delay(1);
     // set Pin 9 to high impedance
+    digitalWrite(9, 0);
     pinMode(9, INPUT);
     delay(10);
   #endif
@@ -137,11 +151,14 @@ void before()
   int sensorValue = analogRead(BATTERY_SENSE_PIN);
 
 
-  float voltage = sensorValue*0.007930934;   //3M \ 470k divider analogReference(INTERNAL);
-  //float voltage = sensorValue*0.010079372; //1M \ 470k divider analogReference(INTERNAL);
+  #ifdef DIVIDER_3M 
+    float voltage = sensorValue*0.007930934;   //3M \ 470k divider formula. analogReference should beanalogReference(INTERNAL);  
+  #else if
+    float voltage = sensorValue*0.010079372; //1M \ 470k divider formula. analogReference should be analogReference(DEFAULT);        
+  #endif
 
   
-  if (voltage > 3.5 && voltage < 5.6 )  {
+  if (voltage > 3.5 && voltage < 5.4 )  {
    // The battery level is critical. To avoid rebooting and flooding radio with presentation messages
    // turn the device into hwSleep mode.
 
@@ -212,10 +229,14 @@ void batteryLevelRead(){
    */
    
   // voltage report valid in room temperatures
-  
-  float voltage = sensorValue*0.007930934;   //3M \ 470k divider analogReference(INTERNAL);
-  //float voltage = sensorValue*0.010079372; //1M \ 470k divider analogReference(INTERNAL);
 
+  #ifdef DIVIDER_3M 
+    float voltage = sensorValue*0.007930934;   //3M \ 470k divider formula. analogReference should beanalogReference(INTERNAL);  
+  #else if
+    float voltage = sensorValue*0.010079372; //1M \ 470k divider formula. analogReference should be analogReference(DEFAULT);        
+  #endif
+
+  
   Serial.print(F("batteryLevelRead() sensorValue ")); Serial.println(sensorValue);
   Serial.print(F("batteryLevelRead()) voltage ")); Serial.println(voltage);
  
@@ -247,17 +268,17 @@ void batteryReport(){
 // Loop will iterate on changes if the BUTTON_PINs wake up the controller/node
 void loop(){ 
   // Buttons state values array
-  static uint8_t  readValue =  0;
+  static uint8_t  readValue[2] =  {0,0};
 
   batteryLevelRead();
 
   // Check active switches after interrupt wakeup 
   for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
     if ((digitalRead(switchButtonPin[i]) == 0) && (relayChildID[i] != 0)) {  
-        readValue == 0 ? readValue = 1:readValue = 0;  // inverting the value each push
+        readValue[i] == 0 ? readValue[i] = 1:readValue[i] = 0;  // inverting the value each push
         msgSwitch[i].setDestination(relayNodeID[i]); 
         //msgSwitch[i].type = V_LIGHT;
-        bool stat =  send(msgSwitch[i].set(readValue), true);
+        bool stat =  send(msgSwitch[i].set(readValue[i]), true);
         // wait for ACK signal up to RFM95_RETRY_TIMEOUT_MS or 50ms for rfm miliseconds
         #ifdef  MY_RADIO_RFM95
           wait(RFM95_RETRY_TIMEOUT_MS, 1, 3);
@@ -274,3 +295,5 @@ void loop(){
   
   sleep(BUTTONS_INTERUPT_PIN - 2, FALLING  , 0); 
 }
+
+   
