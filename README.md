@@ -1,10 +1,12 @@
+                                                 
 <div align="right">
-        <br>
-        <a href="https://www.aliexpress.com/item/1005004994658629.html">
-                <img src="docs/ali_buy_btn.png"  alt="Click to buy from Aliexpr>
-        </a>
-        <br>
+	<br>
+	<a href="https://www.aliexpress.com/item/1005004994658629.html">
+		<img src="https://github.com/EasySensors/6Gang30AmpsLatchRelayEspHomeReady/blob/main/docs/ali_buy_btn.png"  alt="Click to buy from Aliexpress">
+	</a>
+	<br>
 </div>
+
 
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox2_cr.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox3.jpg?raw=true)
