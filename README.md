@@ -7,6 +7,7 @@
 	<br>
 </div>
 
+<a href="https://www.tindie.com/products/19291/?ref=offsite_badges&utm_source=sellers_easySensors&utm_medium=badges&utm_campaign=badge_large"><img src="https://d2ss6ovg47m0r5.cloudfront.net/badges/tindie-larges.png" alt="I sell on Tindie" width="200" height="104"></a>
 
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox2_cr.jpg?raw=true)
 ![arduino Switch Box](https://github.com/EasySensors/switchBox/blob/master/pics/easySwitchBox3.jpg?raw=true)
